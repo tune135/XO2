@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "401607204069",
+    "project_id": "xo2ultimate",
+    "storage_bucket": "xo2ultimate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401607204069:android:d2cf40b35391988176480c",
+        "android_client_info": {
+          "package_name": "com.example.xo2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtUwk_4qXReMR-o3c-DdhKeWdY8-uaZZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
