@@ -1,6 +1,8 @@
 package com.example.xo2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ public class SignIn1 extends AppCompatActivity {
     private Button btn; // Button for sign-in
     private EditText password; // EditText field for password input
     private EditText email; // EditText field for email input
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +38,10 @@ public class SignIn1 extends AppCompatActivity {
                 firebaseHandler.signIn(email.getText().toString(), password.getText().toString());
             }
         });
+    }
+
+    public void Signup(View view) {
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
