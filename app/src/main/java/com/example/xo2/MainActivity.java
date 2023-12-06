@@ -1,47 +1,66 @@
 package com.example.xo2;
 
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    Intent intent; // Intent for navigating to another activity
 
-    private FirebaseHandler firebaseHandler; // Reference to FirebaseHandler for authentication
-    private Button btn; // Button for user registration
-    private EditText password; // EditText field for password input
-    private EditText email; // EditText field for email input
+    Switch swWifiStatus;
+    TextView tvWifiStatus;
+    Intent intent;
+    Context context;
+    Activity activity;
+    Switch swIncomingCall, swNetworkConnected, swBattery;
+
+    IntentFilter filter;
+    IntentFilter intentBatteryFilter;
+    InternetConnectionReceiver internetConnectionReceiver;
+    IntentFilter intentConnectionFilter;
+
+    private FirebaseHandler firebaseHandler;
+    private Button btn;
+    private EditText password;
+    private EditText email;
+
+    private static final String CONNECTIVITY_ACTION = ConnectivityManager.CONNECTIVITY_ACTION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize FirebaseHandler with the FirebaseAuth instance and this activity's context
-        firebaseHandler = new FirebaseHandler(FirebaseAuth.getInstance(), this);
+        initElements();
+
 
         // Initialize UI components
-        btn = findViewById(R.id.button); // Find and reference the registration button from the layout
-        password = findViewById(R.id.editPassword); // Find and reference the password input field from the layout
-        email = findViewById(R.id.editEmail); // Find and reference the email input field from the layout
+        btn = findViewById(R.id.button);
+        password = findViewById(R.id.editPassword);
+        email = findViewById(R.id.editEmail);
 
         // Set an onClickListener for the registration button
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Perform email and password validation checks
+                firebaseHandler = new FirebaseHandler(FirebaseAuth.getInstance(), MainActivity.this);
+
                 if (isValidEmail(email.getText().toString()) && isValidPassword(password.getText().toString())) {
-                    // When the button is clicked and validation passes, call the register method of FirebaseHandler
-                    // with the email and password entered by the user
                     firebaseHandler.register(email.getText().toString(), password.getText().toString());
                 } else {
-                    // Show toast messages for validation errors
                     if (!isValidEmail(email.getText().toString())) {
                         showToast("Invalid email address");
                     } else {
@@ -51,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     // Method for navigating to the SignIn1 activity
     public void Sign(View view) {
         intent = new Intent(this, SignIn1.class);
@@ -59,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Validate email format
     private boolean isValidEmail(String email) {
-        // You can add a more sophisticated email validation logic if needed
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
@@ -71,5 +90,25 @@ public class MainActivity extends AppCompatActivity {
     // Display toast message
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initElements() {
+        activity = MainActivity.this;
+        context = MainActivity.this;
+        tvWifiStatus = findViewById(R.id.textView);
+        internetConnectionReceiver = new InternetConnectionReceiver();
+        intentConnectionFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(internetConnectionReceiver, intentConnectionFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(internetConnectionReceiver);
     }
 }

@@ -58,9 +58,11 @@ import com.google.firebase.auth.FirebaseAuth;
                 Toast.makeText(context, "Registration is not Successful", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(e -> {
-            // If registration fails, show a toast message with a generic error message
-            Toast.makeText(context, "Registration failed. Please try again.", Toast.LENGTH_LONG).show();
+            // If sign-in or registration fails, show a toast message with the specific error message
+            String errorMessage = e.getMessage(); // Get the specific error message from the exception
+            Toast.makeText(context, "Authentication failed: " + errorMessage, Toast.LENGTH_LONG).show();
         });
+
     }
 
     // Getter method for the FirebaseAuth instance

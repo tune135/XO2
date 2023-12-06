@@ -6,4 +6,87 @@
     android:layout_height="match_parent"
     tools:context=".ChooseGame">
 
+    <TextView
+        android:id="@+id/Losses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Losses: 0"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/Wins"
+        app:layout_constraintTop_toBottomOf="@+id/Wins" />
+
+    <TextView
+        android:id="@+id/Draws"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Draws: 0"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/Losses"
+        app:layout_constraintTop_toBottomOf="@+id/Losses" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="איקס עיגול אקסטרים"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.065" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="5dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="615dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/player_name"
+        android:layout_width="319dp"
+        android:layout_height="85dp"
+        android:text="Welcome (his player name)"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintVertical_bias="0.085" />
+
+    <TextView
+        android:id="@+id/Wins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Wins: 0"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/player_name"
+        app:layout_constraintTop_toBottomOf="@+id/player_name" />
+
+    <Button
+        android:id="@+id/StartGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="114dp"
+        android:text="Start a new game"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Draws"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
