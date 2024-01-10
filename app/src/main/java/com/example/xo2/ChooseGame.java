@@ -42,19 +42,23 @@ public class ChooseGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_game);
 
+        // Request necessary permissions
         ActivityCompat.requestPermissions(ChooseGame.this,
                 new String[]{android.Manifest.permission.CAMERA,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
+        // Initialize Firebase
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // Find the TextView for player's name
         name = findViewById(R.id.player_name);
 
         // Initialize FirebaseHandler after finding the views
         firebaseHandler = new FirebaseHandler(FirebaseAuth.getInstance(), this);
 
+        // Register activity result launcher for capturing photos
         arlSmall = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -130,6 +134,7 @@ public class ChooseGame extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Method called when the "New Game" button is clicked
     public void NewGame(View view) {
         // Start the appropriate game activity based on the selected difficulty
         Intent intent;

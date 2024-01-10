@@ -38,11 +38,13 @@ public class GameOptionsActivity extends AppCompatActivity {
         }
     }
 
+    // Method called when the "Start Game" button is clicked
     public void startNewGame(View view) {
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         int selectedId = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = findViewById(selectedId);
 
+        // Get the selected difficulty
         String difficulty = radioButton.getText().toString();
 
         // Set the selected difficulty in FirebaseHandler
