@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Photo"
+        android:title="Change profile photo" />
+
+    <item
+        android:id="@+id/Nickname"
+        android:title="Change your Nickname" />
+
+    <item
+        android:id="@+id/Difficulty"
+        android:title="Change game difficulty" />
+
+    <item
+        android:id="@+id/Exit"
+        android:title="Exit" />
+
+</menu>

@@ -20,15 +20,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Switch swWifiStatus;
+
     TextView tvWifiStatus;
     Intent intent;
     Context context;
     Activity activity;
-    Switch swIncomingCall, swNetworkConnected, swBattery;
 
-    IntentFilter filter;
-    IntentFilter intentBatteryFilter;
     InternetConnectionReceiver internetConnectionReceiver;
     IntentFilter intentConnectionFilter;
 
