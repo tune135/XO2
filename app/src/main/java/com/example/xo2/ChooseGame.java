@@ -141,7 +141,7 @@ public class ChooseGame extends AppCompatActivity {
         String difficulty = firebaseHandler.getSelectedDifficulty();
 
         if ("Difficulty Hard - Play against a bot".equals(difficulty)) {
-            intent = new Intent(this, GameABot.class);
+            intent = new Intent(this, GameABot20.class);
         } else if ("Difficulty Changing - Play against a real player".equals(difficulty)) {
             intent = new Intent(this, GameAPlayer.class);
         } else {

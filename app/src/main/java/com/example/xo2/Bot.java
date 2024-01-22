@@ -27,7 +27,14 @@ public class Bot {
         }
     }
 
-
+    /**
+     * Gets the bots number (1 for X, -1 for O).
+     *
+     * @return The bots number.
+     */
+    public int getBotNum() {
+        return this.botNum;
+    }
     /**
      * Sets the player number for the bot (1 for X, -1 for O).
      *
