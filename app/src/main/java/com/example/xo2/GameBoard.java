@@ -3,7 +3,7 @@ package com.example.xo2;
 public class GameBoard {
     private String turn; //מי משחק
     private int[][] bigBoard; //מערך דו ממדי של הלוח הגדול
-    private int[][] [][] smallBoard; //מערך דו ממדי של מערכים דו ממדיים של הלוחות הקטנים
+    private int[][][][] smallBoard; //מערך דו ממדי של מערכים דו ממדיים של הלוחות הקטנים
 
     public GameBoard(){
         this.turn = "X"; //X מתחיל את המשחק
@@ -13,10 +13,14 @@ public class GameBoard {
                 this.bigBoard[i][j] = 0; //הכנסת 0 לאיפוס
             }
         }
-        this.smallBoard = new int[3][3] [][]; //גודל 3*3 בשביל 9 הלוחות
-        for(int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                this.smallBoard[i][j] = this.bigBoard; //הכנסת מערך 3*3 עם ערכים של 0 לאיפוס
+        this.smallBoard = new int[3][3][3][3]; //גודל 3*3 בשביל 9 הלוחות
+        for(int a = 0; a < 3; a++){
+            for (int b = 0; b < 3; b++){
+                for(int i = 0; i < 3; i++){
+                    for (int j = 0; j < 3; j++){
+                        this.smallBoard[a][b][i][j] = 0; //הכנסת מערך 3*3 עם ערכים של 0 לאיפוס
+                    }
+                }
             }
         }
     }
@@ -45,52 +49,91 @@ public class GameBoard {
         this.smallBoard = smallBoard;
     }
 
-    public String gamePlay(int playOnS, int playOnB){
-        switch (this.turn)  {
-            case "X":{
-                smallBoard[playOnB / 10][playOnB % 10] [playOnS / 10][playOnS % 10] = 1;
-                if(WinCheck(smallBoard[playOnB / 10][playOnB % 10], 1)) { //בדיקה אם שחקן ניצח בלוח הקטן
+    /**
+     * Manages the gameplay logic for a player's move.
+     *
+     * @param playOnS Coordinates for the small board (e.g., 22 for the center)
+     * @param playOnB Coordinates for the big board (e.g., 11 for the top-left)
+     * @return Result of the move - "X", "O", "Draw", "any", or "-1000"
+     */
+    public String gamePlay(int playOnS, int playOnB) {
+        switch (this.turn) {
+            case "X": {
+                // Perform X's move on the small board
+                smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = 1;
+
+                // Check for a win in the small board
+                if (WinCheck(smallBoard[playOnB / 10][playOnB % 10], 1)) {
+                    // Update the corresponding cell in the big board
                     bigBoard[playOnB / 10][playOnB % 10] = 1;
-                    if(WinCheck(bigBoard, 1)) { //בדיקה אם שחקן ניצח בלוח הגדול
+                    for(int i = 0; i < 3; i++){
+                        for(int j = 0; j < 3; j++){
+                            smallBoard[playOnB / 10][playOnB % 10][i][j] = 1;
+                        }
+                    }
+
+                    // Check for a win in the big board
+                    if (WinCheck(bigBoard, 1)) {
                         return "X";
                     }
                 }
-                this.turn = "O";
-                if(bigBoard[playOnS / 10][playOnS % 10] == 0) { //בדיקה אם הלוח הקטן בו השחקן השני בתור הבא אמור לשחק אם ניצחו בו
-                    return playOnS + "";
+
+                // Check for a draw in the big board or no more play options in the small boards
+                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(smallBoard)) {
+                    return "Draw";
                 }
-                else{
-                    return "any";
+
+                // Switch turn to "O" and continue the game
+                this.turn = "O";
+
+                // Check if the selected cell in the big board is empty
+                if (bigBoard[playOnS / 10][playOnS % 10] == 0) {
+                    return playOnS + "";
+                } else {
+                    return "any"; // Cell is already occupied
                 }
             }
-            case "O":{
-                smallBoard[playOnB / 10][playOnB % 10] [playOnS / 10][playOnS % 10] = -1;
-                if(WinCheck(smallBoard[playOnB / 10][playOnB % 10], -1)) { //בדיקה אם שחקן ניצח בלוח הקטן
+            case "O": {
+                // Perform O's move on the small board
+                smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = -1;
+
+                // Check for a win in the small board
+                if (WinCheck(smallBoard[playOnB / 10][playOnB % 10], -1)) {
+                    // Update the corresponding cell in the big board
                     bigBoard[playOnB / 10][playOnB % 10] = -1;
-                    if(WinCheck(bigBoard, -1)) { //בדיקה אם שחקן ניצח בלוח הגדול
+
+                    for(int i = 0; i < 3; i++){
+                        for(int j = 0; j < 3; j++){
+                            smallBoard[playOnB / 10][playOnB % 10][i][j] = -1;
+                        }
+                    }
+
+                    // Check for a win in the big board
+                    if (WinCheck(bigBoard, -1)) {
                         return "O";
                     }
                 }
-                this.turn = "X";
-                if(bigBoard[playOnS / 10][playOnS % 10] == 0) {//בדיקה אם הלוח הקטן בו השחקן השני בתור הבא אמור לשחק אם ניצחו בו
-                    return playOnS + "";
+
+                // Check for a draw in the big board or no more play options in the small boards
+                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(smallBoard)) {
+                    return "Draw";
                 }
-                else{
-                    return "any";
+
+                // Switch turn to "X" and continue the game
+                this.turn = "X";
+
+                // Check if the selected cell in the big board is empty
+                if (bigBoard[playOnS / 10][playOnS % 10] == 0) {
+                    return playOnS + "";
+                } else {
+                    return "any"; // Cell is already occupied
                 }
             }
+            default:
+                return "-1000"; // Invalid turn indicator
         }
-
-        return "-1000";
-        /*
-        swich (gamePlay(sBoard, bBoard))
-        case "X" - X won
-        case "O" - O won
-        case "any" - play next turn anywhere
-        case "00" / "01" / "02" / "10" / "11" / "12" / "20" / "21" / "22" - play next turn int that place on big board
-        case "-1000" - error
-         */
     }
+
 
     public Boolean WinCheck(int[][] board, int player){
         // בדיקת שורות וטורים
@@ -113,5 +156,31 @@ public class GameBoard {
 
         return false; // No win
     }
+    public boolean BigBoardDrawCheck(int[][] board){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == 0) {
+                    return false; // There is an empty cell, not a draw
+                }
+            }
+        }
+        return true; // All cells are filled, it's a draw
+    }
+
+    public boolean NoMorePlayOptionsDrawCheck(int[][][][] smallBoard){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+                        if (smallBoard[i][j][k][l] == 0) {
+                            return false; // There is an empty cell, not a draw
+                        }
+                    }
+                }
+            }
+        }
+        return true; // All cells are filled, it's a draw
+    }
+
 
 }

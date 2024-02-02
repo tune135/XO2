@@ -83,7 +83,7 @@ public class Bot {
 
     public int playBot(int boardPlay) {
         // Initialize play
-        this.botPlay = -1;
+        this.botPlay = 0;
         if (boardPlay == -1) { //-1 for any play
             int bestPlayProp = 0;
             int nowPlayProp;
@@ -219,7 +219,7 @@ public class Bot {
     }
 
     /**
-     * Check if the other player can win the current small board on the next turn.
+     * Check if the other player can win the next small board on the next turn.
      *
      * @return True if the other player can win the small board on the next turn, false otherwise.
      */

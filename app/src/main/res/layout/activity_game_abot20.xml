@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="B08"
     tools:context=".GameABot20">
 
     <TextView
@@ -36,16 +35,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="4dp"
         android:text="Timer: 02:00"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/divider"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-    <GridLayout
+    <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout999"
-        android:layout_width="399dp"
-        android:layout_height="422dp"
+        android:layout_width="319.5dp"
+        android:layout_height="337.6dp"
         android:layout_gravity="center"
         android:layout_marginStart="15dp"
         android:layout_marginTop="116dp"
@@ -63,17 +63,17 @@
         <androidx.gridlayout.widget.GridLayout
 
             android:id="@+id/grid00"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="0"
             android:layout_rowSpan="2"
             android:layout_column="0"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton00"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0000"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -83,9 +83,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton01"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0001"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -93,9 +93,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton02"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0002"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -104,9 +104,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton10"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0010"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -116,9 +116,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton11"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0011"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -126,9 +126,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton12"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0012"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -136,9 +136,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton20"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0020"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -148,9 +148,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton21"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0021"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -158,9 +158,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton22"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0022"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -170,24 +170,24 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid01"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="0"
             android:layout_rowSpan="2"
             android:layout_column="2"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton03"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0100"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -197,9 +197,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton04"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0101"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -207,9 +207,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton05"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0102"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -218,9 +218,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton13"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0110"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -230,9 +230,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton14"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0111"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -240,9 +240,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton15"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0112"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -250,9 +250,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton23"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0120"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -262,20 +262,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton24"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0121"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
-                android:onClick="B24"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton25"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0122"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -283,24 +284,24 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid02"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="0"
             android:layout_rowSpan="2"
             android:layout_column="4"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton06"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0200"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="0"
@@ -310,31 +311,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton07"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0201"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
-                android:onClick="B07"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton08"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0202"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton16"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0210"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
-                android:onClick="B16"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -342,9 +344,9 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton17"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0211"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="1"
@@ -352,9 +354,9 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton18"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0212"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
                 android:onClick="Play"
                 app:layout_column="2"
@@ -362,10 +364,11 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton26"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0220"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -373,19 +376,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton27"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton0221"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton28"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton0222"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -393,19 +398,19 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_row="2"
             android:layout_column="0" />
 
         <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_row="2"
             android:layout_column="2" />
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="4" />
@@ -413,18 +418,19 @@
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid10"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="3"
             android:layout_rowSpan="2"
             android:layout_column="0"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton30"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1000"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -432,29 +438,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton31"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1001"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton32"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1002"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1010"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -462,28 +471,31 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton41"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1011"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton42"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1012"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton50"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1020"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -491,19 +503,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton51"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1021"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton52"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1022"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -511,25 +525,26 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid11"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="3"
             android:layout_rowSpan="2"
             android:layout_column="2"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton33"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1100"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -537,29 +552,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton34"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1101"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton35"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1102"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton43"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1110"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -567,28 +585,31 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton44"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1111"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton45"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1112"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton53"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1120"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -596,19 +617,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton54"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1121"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton55"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1122"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -616,25 +639,26 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid12"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="3"
             android:layout_rowSpan="2"
             android:layout_column="4"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton36"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1200"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -642,29 +666,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton37"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1201"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton38"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1202"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton46"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1210"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -672,48 +699,53 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton47"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1211"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton48"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton1212"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton56"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:id="@+id/imageButton1220"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
-                app:srcCompat="@drawable/ic_y2"
+                app:srcCompat="@drawable/ic_yellow"
                 tools:ignore="SpeakableTextPresentCheck" />
 
 
             <ImageButton
-                android:id="@+id/imageButton57"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton1221"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton58"
-                android:layout_width="36dp"
-                android:layout_height="40dp"
+                android:id="@+id/imageButton1222"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -722,19 +754,19 @@
 
 
         <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_row="5"
             android:layout_column="0" />
 
         <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_row="5"
             android:layout_column="2" />
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_row="5"
             android:layout_column="4" />
@@ -743,18 +775,19 @@
         <androidx.gridlayout.widget.GridLayout
 
             android:id="@+id/grid20"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="6"
             android:layout_rowSpan="2"
             android:layout_column="0"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton60"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2000"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -762,29 +795,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton61"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2001"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton62"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2002"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton70"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2010"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -792,28 +828,31 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton71"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2011"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton72"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2012"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton80"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2020"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -821,19 +860,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton81"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2021"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton82"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2022"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -841,25 +882,26 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid21"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="6"
             android:layout_rowSpan="2"
             android:layout_column="2"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton63"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2100"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -867,29 +909,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton64"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2101"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton65"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2102"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton73"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2110"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -897,28 +942,31 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton74"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2111"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton75"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2112"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton83"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2120"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -926,19 +974,21 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton84"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2121"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton85"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2122"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
@@ -946,25 +996,26 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <Space
-            android:layout_width="20dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="3" />
 
         <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid22"
-            android:layout_width="122dp"
-            android:layout_height="126dp"
+            android:layout_width="97.6dp"
+            android:layout_height="100.8dp"
             android:layout_row="6"
             android:layout_rowSpan="2"
             android:layout_column="4"
             android:background="@drawable/boards">
 
             <ImageButton
-                android:id="@+id/imageButton66"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2200"
+                android:layout_width="29dp"
+                android:layout_height="34dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow"
@@ -972,29 +1023,32 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton67"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2201"
+                android:layout_width="31dp"
+                android:layout_height="32dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton68"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2202"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="0"
                 app:srcCompat="@drawable/ic_yellow" />
 
 
             <ImageButton
-                android:id="@+id/imageButton76"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2210"
+                android:layout_width="32dp"
+                android:layout_height="27dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow"
@@ -1002,28 +1056,31 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton77"
-                android:layout_width="37dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2211"
+                android:layout_width="29.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton78"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2212"
+                android:layout_width="28.8dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton86"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2220"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="0"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow"
@@ -1031,25 +1088,27 @@
 
 
             <ImageButton
-                android:id="@+id/imageButton87"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:id="@+id/imageButton2221"
+                android:layout_width="33.6dp"
+                android:layout_height="33.6dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="1"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
             <ImageButton
-                android:id="@+id/imageButton88"
-                android:layout_width="36dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2222"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="#FFFFFF"
+                android:onClick="Play"
                 app:layout_column="2"
                 app:layout_row="2"
                 app:srcCompat="@drawable/ic_yellow" />
 
         </androidx.gridlayout.widget.GridLayout>
-    </GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 
     <TextView
         android:id="@+id/turn2"

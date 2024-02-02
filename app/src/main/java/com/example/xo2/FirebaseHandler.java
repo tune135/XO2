@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                Intent intent = new Intent(context, GameABot20.class);
+                Intent intent = new Intent(context, GameAPlayer.class);
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in
@@ -185,6 +185,65 @@ public class FirebaseHandler {
         this.auth = auth;
     }
 
-    // Define the Player class to represent the data structure
+    // Method to create a new game room
+    public void createGameRoom() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            // Generate a unique game ID
+            String gameId = generateGameId();
+
+            // Create a new game room with initial data
+            DatabaseReference gameRef = mDatabase.child("games").child(gameId);
+            gameRef.child("player1").setValue(currentUser.getUid());
+            gameRef.child("player2").setValue(""); // Player2 will be set when the second player joins
+            gameRef.child("turn").setValue("player1"); // Set the initial turn to player1
+            gameRef.child("board").setValue(""); // Initialize the game board
+
+            // Navigate to the game activity with the generated game ID
+            Intent intent = new Intent(context, GameAPlayer.class);
+            intent.putExtra("gameId", gameId);
+            context.startActivity(intent);
+        }
+    }
+
+    // Method to join an existing game room
+    public void joinGameRoom(String gameId) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            DatabaseReference gameRef = mDatabase.child("games").child(gameId);
+
+            // Check if the game room exists and is not full
+            gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String player1 = dataSnapshot.child("player1").getValue(String.class);
+                    String player2 = dataSnapshot.child("player2").getValue(String.class);
+
+                    if (player1 != null && player2.isEmpty()) {
+                        // Join the game room as player2
+                        gameRef.child("player2").setValue(currentUser.getUid());
+                        // Navigate to the game activity with the provided game ID
+                        Intent intent = new Intent(context, GameAPlayer.class);
+                        intent.putExtra("gameId", gameId);
+                        context.startActivity(intent);
+                    } else {
+                        // The game room is full or does not exist
+                        Toast.makeText(context, "Game room is full or does not exist", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle errors
+                }
+            });
+        }
+    }
+
+    // Method to generate a unique game ID
+    private String generateGameId() {
+        // Implement your logic to generate a unique ID, for example, using a timestamp or random string
+        return "game_" + System.currentTimeMillis();
+    }
 
 }
