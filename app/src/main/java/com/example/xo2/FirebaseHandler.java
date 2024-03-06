@@ -2,7 +2,6 @@ package com.example.xo2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,7 +10,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class FirebaseHandler {
@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                Intent intent = new Intent(context, GameAPlayer.class);
+                Intent intent = new Intent(context, OnlineCode.class);
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in
@@ -173,77 +173,47 @@ public class FirebaseHandler {
                     });
         }
     }
-
-
-    // Getter method for the FirebaseAuth instance
-    public FirebaseAuth getAuth() {
-        return auth;
+    public void joinCode(String code, ValueEventListener valueEventListener) {
+        DatabaseReference codesRef = FirebaseDatabase.getInstance().getReference().child("Codes");
+        codesRef.addListenerForSingleValueEvent(valueEventListener);
     }
 
-    // Setter method to update the FirebaseAuth instance
-    public void setAuth(FirebaseAuth auth) {
-        this.auth = auth;
-    }
-
-    // Method to create a new game room
-    public void createGameRoom() {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            // Generate a unique game ID
-            String gameId = generateGameId();
-
-            // Create a new game room with initial data
-            DatabaseReference gameRef = mDatabase.child("games").child(gameId);
-            gameRef.child("player1").setValue(currentUser.getUid());
-            gameRef.child("player2").setValue(""); // Player2 will be set when the second player joins
-            gameRef.child("turn").setValue("player1"); // Set the initial turn to player1
-            gameRef.child("board").setValue(""); // Initialize the game board
-
-            // Navigate to the game activity with the generated game ID
-            Intent intent = new Intent(context, GameAPlayer.class);
-            intent.putExtra("gameId", gameId);
-            context.startActivity(intent);
-        }
-    }
-
-    // Method to join an existing game room
-    public void joinGameRoom(String gameId) {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            DatabaseReference gameRef = mDatabase.child("games").child(gameId);
-
-            // Check if the game room exists and is not full
-            gameRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String player1 = dataSnapshot.child("player1").getValue(String.class);
-                    String player2 = dataSnapshot.child("player2").getValue(String.class);
-
-                    if (player1 != null && player2.isEmpty()) {
-                        // Join the game room as player2
-                        gameRef.child("player2").setValue(currentUser.getUid());
-                        // Navigate to the game activity with the provided game ID
-                        Intent intent = new Intent(context, GameAPlayer.class);
-                        intent.putExtra("gameId", gameId);
-                        context.startActivity(intent);
-                    } else {
-                        // The game room is full or does not exist
-                        Toast.makeText(context, "Game room is full or does not exist", Toast.LENGTH_SHORT).show();
-                    }
+    public void createCode(String code, OnCompleteListener<Void> onCompleteListener, OnFailureListener onFailureListener) {
+        DatabaseReference codesRef = FirebaseDatabase.getInstance().getReference().child("Codes");
+        codesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (isValueAvailable(snapshot, code)) {
+                    // Code already exists
+                    onCompleteListener.onComplete(Tasks.forResult(null)); // Use Tasks utility class here
+                } else {
+                    // Code does not exist, create it
+                    codesRef.push().setValue(code).addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailureListener);
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle errors
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle onCancelled
+            }
+        });
+    }
+
+    private boolean isValueAvailable(DataSnapshot snapshot, String code) {
+        Iterable<DataSnapshot> data = snapshot.getChildren();
+        Iterator<DataSnapshot> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            DataSnapshot dataSnapshot = iterator.next();
+            String value = dataSnapshot.getValue().toString();
+            if (value.equals(code)) {
+                Constants.keyValue = dataSnapshot.getKey().toString();
+                return true;
+            }
         }
+        return false;
     }
 
-    // Method to generate a unique game ID
-    private String generateGameId() {
-        // Implement your logic to generate a unique ID, for example, using a timestamp or random string
-        return "game_" + System.currentTimeMillis();
-    }
+
+
 
 }

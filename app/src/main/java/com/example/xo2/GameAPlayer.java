@@ -1,20 +1,28 @@
 package com.example.xo2;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.transition.Visibility;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
 public class GameAPlayer extends AppCompatActivity {
+
 
     // Declare member variables
     GridLayout[][] bigBoardGrids;
@@ -25,11 +33,12 @@ public class GameAPlayer extends AppCompatActivity {
     int playS;
     int playB;
     String nextTurnPlayString;
-    int nextTurnPlayNumberBBoard;
     int nextTurnPlayNumberSBoard;
     Intent intent;
     CountDownTimer countDownTimer;
     boolean timerRunning = false;
+
+    int activeUser = 1;
 
 
     // Override the onCreate method to initialize the activity
@@ -38,6 +47,7 @@ public class GameAPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_aplayer);
 
+        turnView = findViewById(R.id.turn2);
         // Initialize the GameBoard
         board = new GameBoard();
 
@@ -61,12 +71,47 @@ public class GameAPlayer extends AppCompatActivity {
             }
         }
 
+        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                Object data = snapshot.getValue();
+                if (IsMyMove.isMyMove) {
+                    IsMyMove.isMyMove = false;
+                    MoveOnline(data.toString(), IsMyMove.isMyMove);
+                } else {
+                    IsMyMove.isMyMove = true;
+                    MoveOnline(data.toString(), IsMyMove.isMyMove);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                // Your code for handling child changed event
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                // Your code for handling child removed event
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                // Your code for handling child moved event
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Your code for handling database error
+            }
+        });
+
+
         // Generate a random player number (1 or -1) and initialize the turnView
         Random random = new Random();
         int randomValue = random.nextInt(2);
         int playerNumber = (randomValue == 0) ? -1 : 1;
 
-        turnView = findViewById(R.id.turn2);
         turnView.setText("Player X's turn");
 
         ApplyTimer();
@@ -86,6 +131,51 @@ public class GameAPlayer extends AppCompatActivity {
         return findViewById(resID);
     }
 
+    public void MoveOnline(String data, Boolean move){
+        if(move) {
+            ImageButton buttonSelected;
+            for (int a = 0; a < 3; a++) {
+                for (int b = 0; b < 3; b++) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (Integer.parseInt(data) / 100 == a * 10 + b && Integer.parseInt(data) % 100 == i * 10 + j) {
+                                playS = i * 10 + j;
+                                playB = a * 10 + b;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+        turnView.setText("Player O's turn");
+
+        // Get the result of the game play
+        nextTurnPlayString = board.gamePlay(playS, playB);
+
+    }
+
+    public void updateDatabase(int cellId) {
+        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId);
+    }
+
+    void removeCode() {
+        if (Constants.isCodeMaker) {
+            FirebaseDatabase.getInstance().getReference().child("codes").child(Constants.keyValue).removeValue();
+        }
+    }
+
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        removeCode();
+        if (Constants.isCodeMaker) {
+            FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).removeValue();
+        }
+        System.exit(0);
+    }
 
     // Method to apply a countdown timer
     public void ApplyTimer() {
@@ -142,57 +232,64 @@ public class GameAPlayer extends AppCompatActivity {
 
     // Method to handle player's move
     public void Play(View view) {
-        // Identify the clicked ImageButton
-        for (int a = 0; a < 3; a++) {
-            for (int b = 0; b < 3; b++) {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        if (smallBoardButtons[a][b][i][j].getId() == view.getId()) {
-                            playS = i * 10 + j;
-                            playB = a * 10 + b;
-                            break;
+        if(IsMyMove.isMyMove){
+            // Identify the clicked ImageButton
+            int cellOnline = 0;
+            for (int a = 0; a < 3; a++) {
+                for (int b = 0; b < 3; b++) {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (smallBoardButtons[a][b][i][j].getId() == view.getId()) {
+                                playS = i * 10 + j;
+                                playB = a * 10 + b;
+                                cellOnline = (a * 10 + b) * 100 + i * 10 + j;
+                                break;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // Set the image resource based on the player's turn
-        if (Objects.equals(board.getTurn(), "X")) {
-            smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
-        } else if (Objects.equals(board.getTurn(), "O")) {
-            smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
-        }
 
-        // Get the result of the game play
-        nextTurnPlayString = board.gamePlay(playS, playB);
+            // Set the image resource based on the player's turn
+            if (Objects.equals(board.getTurn(), "X")) {
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+            } else if (Objects.equals(board.getTurn(), "O")) {
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
+            }
 
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                if(board.getBigBoard()[i][j] == 1){
-                    ResetAllButtonsForOneSBoard(i * 10 + j);
-                    bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
-                }
-                else if(board.getBigBoard()[i][j] == -1){
-                    ResetAllButtonsForOneSBoard(i * 10 + j);
-                    bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
+            // Get the result of the game play
+            nextTurnPlayString = board.gamePlay(playS, playB);
+
+            updateDatabase(cellOnline);
+
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    if(board.getBigBoard()[i][j] == 1){
+                        ResetAllButtonsForOneSBoard(i * 10 + j);
+                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
+                    }
+                    else if(board.getBigBoard()[i][j] == -1){
+                        ResetAllButtonsForOneSBoard(i * 10 + j);
+                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
+                    }
                 }
             }
-        }
 
 
-        // Check the result of the game play and navigate to EndGame activity accordingly
-        if (Objects.equals(nextTurnPlayString, "X")) {
-            intent = new Intent(this, EndGame.class);
-            startActivity(intent); // player X win
+            // Check the result of the game play and navigate to EndGame activity accordingly
+            if (Objects.equals(nextTurnPlayString, "X")) {
+                intent = new Intent(this, EndGame.class);
+                startActivity(intent); // player X win
 
-        } else if (Objects.equals(nextTurnPlayString, "O")) {
-            intent = new Intent(this, EndGame.class);
-            startActivity(intent); // player O win
+            } else if (Objects.equals(nextTurnPlayString, "O")) {
+                intent = new Intent(this, EndGame.class);
+                startActivity(intent); // player O win
 
-        } else {
-            NextTurn();
-            ApplyTimer();
+            } else {
+                NextTurn();
+                ApplyTimer();
+            }
         }
     }
 
