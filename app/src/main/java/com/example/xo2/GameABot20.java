@@ -271,14 +271,12 @@ public class GameABot20 extends AppCompatActivity {
             if (smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].isClickable()) {
                 smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].performClick();
             } else {
-                /*intent = new Intent(this, EndGame.class);
+                intent = new Intent(this, EndGame.class);
                 startActivity(intent); // player win
-                 */
             }
         } else {
-            /*intent = new Intent(this, EndGame.class);
+            intent = new Intent(this, EndGame.class);
             startActivity(intent); // player win
-             */
         }
     }
 }

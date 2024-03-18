@@ -132,8 +132,8 @@ public class GameAPlayer extends AppCompatActivity {
     }
 
     public void MoveOnline(String data, Boolean move){
+        int cellOnline = 0;
         if(move) {
-            ImageButton buttonSelected;
             for (int a = 0; a < 3; a++) {
                 for (int b = 0; b < 3; b++) {
                     for (int i = 0; i < 3; i++) {
@@ -141,25 +141,77 @@ public class GameAPlayer extends AppCompatActivity {
                             if (Integer.parseInt(data) / 100 == a * 10 + b && Integer.parseInt(data) % 100 == i * 10 + j) {
                                 playS = i * 10 + j;
                                 playB = a * 10 + b;
+                                cellOnline = (a * 10 + b) * 100 + i * 10 + j;
                                 break;
                             }
                         }
                     }
                 }
             }
+
+            // Set the image resource based on the player's turn
+            if (Objects.equals(board.getTurn(), "X")) {
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+                turnView.setText("Player O's turn");
+            } else if (Objects.equals(board.getTurn(), "O")) {
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
+                turnView.setText("Player X's turn");
+            }
+
+            // Get the result of the game play
+            nextTurnPlayString = board.gamePlay(playS, playB);
+
+            updateDatabase(cellOnline);
+
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    if(board.getBigBoard()[i][j] == 1){
+                        ResetAllButtonsForOneSBoard(i * 10 + j);
+                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
+                        updateDatabaseBigBoard(i * 10 + j);
+                    }
+                    else if(board.getBigBoard()[i][j] == -1){
+                        ResetAllButtonsForOneSBoard(i * 10 + j);
+                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
+                        updateDatabaseBigBoard(i * 10 + j);
+                    }
+                }
+            }
+
+
+            // Check the result of the game play and navigate to EndGame activity accordingly
+            if (Objects.equals(nextTurnPlayString, "X")) {
+                intent = new Intent(this, EndGame.class);
+                startActivity(intent); // player X win
+            } else if (Objects.equals(nextTurnPlayString, "O")) {
+                intent = new Intent(this, EndGame.class);
+                startActivity(intent); // player O win
+            } else {
+                NextTurn();
+                ApplyTimer();
+            }
+
         }
 
-        smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
-        turnView.setText("Player O's turn");
 
-        // Get the result of the game play
-        nextTurnPlayString = board.gamePlay(playS, playB);
+
 
     }
 
     public void updateDatabase(int cellId) {
         FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId);
     }
+
+    public void updateDatabaseBigBoard(int cellId){
+        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId);
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId * 100 + i * 10 + j);
+            }
+        }
+    }
+
 
     void removeCode() {
         if (Constants.isCodeMaker) {
@@ -230,68 +282,68 @@ public class GameAPlayer extends AppCompatActivity {
         smallBoardButtons[randomNumB1][randomNumB2][randomNumS1][randomNumS2].performClick();
     }
 
-    // Method to handle player's move
-    public void Play(View view) {
-        if(IsMyMove.isMyMove){
-            // Identify the clicked ImageButton
-            int cellOnline = 0;
-            for (int a = 0; a < 3; a++) {
-                for (int b = 0; b < 3; b++) {
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            if (smallBoardButtons[a][b][i][j].getId() == view.getId()) {
-                                playS = i * 10 + j;
-                                playB = a * 10 + b;
-                                cellOnline = (a * 10 + b) * 100 + i * 10 + j;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-
-            // Set the image resource based on the player's turn
-            if (Objects.equals(board.getTurn(), "X")) {
-                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
-            } else if (Objects.equals(board.getTurn(), "O")) {
-                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
-            }
-
-            // Get the result of the game play
-            nextTurnPlayString = board.gamePlay(playS, playB);
-
-            updateDatabase(cellOnline);
-
-            for(int i = 0; i < 3; i++){
-                for(int j = 0; j < 3; j++){
-                    if(board.getBigBoard()[i][j] == 1){
-                        ResetAllButtonsForOneSBoard(i * 10 + j);
-                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
-                    }
-                    else if(board.getBigBoard()[i][j] == -1){
-                        ResetAllButtonsForOneSBoard(i * 10 + j);
-                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
-                    }
-                }
-            }
-
-
-            // Check the result of the game play and navigate to EndGame activity accordingly
-            if (Objects.equals(nextTurnPlayString, "X")) {
-                intent = new Intent(this, EndGame.class);
-                startActivity(intent); // player X win
-
-            } else if (Objects.equals(nextTurnPlayString, "O")) {
-                intent = new Intent(this, EndGame.class);
-                startActivity(intent); // player O win
-
-            } else {
-                NextTurn();
-                ApplyTimer();
-            }
-        }
-    }
+//    // Method to handle player's move
+//    public void Play(View view) {
+//        if(IsMyMove.isMyMove){
+//            // Identify the clicked ImageButton
+//            int cellOnline = 0;
+//            for (int a = 0; a < 3; a++) {
+//                for (int b = 0; b < 3; b++) {
+//                    for (int i = 0; i < 3; i++) {
+//                        for (int j = 0; j < 3; j++) {
+//                            if (smallBoardButtons[a][b][i][j].getId() == view.getId()) {
+//                                playS = i * 10 + j;
+//                                playB = a * 10 + b;
+//                                cellOnline = (a * 10 + b) * 100 + i * 10 + j;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//
+//            // Set the image resource based on the player's turn
+//            if (Objects.equals(board.getTurn(), "X")) {
+//                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+//            } else if (Objects.equals(board.getTurn(), "O")) {
+//                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
+//            }
+//
+//            // Get the result of the game play
+//            nextTurnPlayString = board.gamePlay(playS, playB);
+//
+//            updateDatabase(cellOnline);
+//
+//            for(int i = 0; i < 3; i++){
+//                for(int j = 0; j < 3; j++){
+//                    if(board.getBigBoard()[i][j] == 1){
+//                        ResetAllButtonsForOneSBoard(i * 10 + j);
+//                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
+//                    }
+//                    else if(board.getBigBoard()[i][j] == -1){
+//                        ResetAllButtonsForOneSBoard(i * 10 + j);
+//                        bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
+//                    }
+//                }
+//            }
+//
+//
+//            // Check the result of the game play and navigate to EndGame activity accordingly
+//            if (Objects.equals(nextTurnPlayString, "X")) {
+//                intent = new Intent(this, EndGame.class);
+//                startActivity(intent); // player X win
+//
+//            } else if (Objects.equals(nextTurnPlayString, "O")) {
+//                intent = new Intent(this, EndGame.class);
+//                startActivity(intent); // player O win
+//
+//            } else {
+//                NextTurn();
+//                ApplyTimer();
+//            }
+//        }
+//    }
 
     // Method to handle the next turn and update clickable buttons
     public void NextTurn() {
