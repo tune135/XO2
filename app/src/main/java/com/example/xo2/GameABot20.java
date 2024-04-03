@@ -3,7 +3,6 @@ package com.example.xo2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -271,8 +270,8 @@ public class GameABot20 extends AppCompatActivity {
             if (smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].isClickable()) {
                 smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].performClick();
             } else {
-                intent = new Intent(this, EndGame.class);
-                startActivity(intent); // player win
+//                intent = new Intent(this, EndGame.class);
+//                startActivity(intent); // player win
             }
         } else {
             intent = new Intent(this, EndGame.class);

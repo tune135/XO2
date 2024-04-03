@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/divider"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-    <androidx.gridlayout.widget.GridLayout
+    <GridLayout
         android:id="@+id/gridLayout999"
         android:layout_width="319.5dp"
         android:layout_height="337.6dp"
@@ -1108,7 +1108,7 @@
                 app:srcCompat="@drawable/ic_yellow" />
 
         </androidx.gridlayout.widget.GridLayout>
-    </androidx.gridlayout.widget.GridLayout>
+    </GridLayout>
 
     <TextView
         android:id="@+id/turn2"

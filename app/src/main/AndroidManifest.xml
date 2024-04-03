@@ -29,19 +29,10 @@
             android:name=".EndGame"
             android:exported="false" />
         <activity
-            android:name=".GameABot20"
-            android:exported="false" />
-        <activity
-            android:name=".gameABot2"
-            android:exported="false" />
-        <activity
-            android:name=".UltimateTicTacToeBoardDrawable"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".GameAPlayer"
-            android:exported="false" />
-        <activity
-            android:name=".GameABot2"
             android:exported="false" />
         <activity
             android:name=".GameOptionsActivity"
@@ -62,7 +53,7 @@
             android:name=".ChooseGame"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".GameABot20"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
