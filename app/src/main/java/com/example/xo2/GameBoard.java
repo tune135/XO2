@@ -60,15 +60,15 @@ public class GameBoard {
         switch (this.turn) {
             case "X": {
                 // Perform X's move on the small board
-                smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = 1;
+                this.smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = 1;
 
                 // Check for a win in the small board
-                if (WinCheck(smallBoard[playOnB / 10][playOnB % 10], 1)) {
+                if (WinCheck(this.smallBoard[playOnB / 10][playOnB % 10], 1)) {
                     // Update the corresponding cell in the big board
                     bigBoard[playOnB / 10][playOnB % 10] = 1;
                     for(int i = 0; i < 3; i++){
                         for(int j = 0; j < 3; j++){
-                            smallBoard[playOnB / 10][playOnB % 10][i][j] = 1;
+                            this.smallBoard[playOnB / 10][playOnB % 10][i][j] = 1;
                         }
                     }
 
@@ -79,7 +79,7 @@ public class GameBoard {
                 }
 
                 // Check for a draw in the big board or no more play options in the small boards
-                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(smallBoard)) {
+                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(this.smallBoard)) {
                     return "Draw";
                 }
 
@@ -95,16 +95,16 @@ public class GameBoard {
             }
             case "O": {
                 // Perform O's move on the small board
-                smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = -1;
+                this.smallBoard[playOnB / 10][playOnB % 10][playOnS / 10][playOnS % 10] = -1;
 
                 // Check for a win in the small board
-                if (WinCheck(smallBoard[playOnB / 10][playOnB % 10], -1)) {
+                if (WinCheck(this.smallBoard[playOnB / 10][playOnB % 10], -1)) {
                     // Update the corresponding cell in the big board
                     bigBoard[playOnB / 10][playOnB % 10] = -1;
 
                     for(int i = 0; i < 3; i++){
                         for(int j = 0; j < 3; j++){
-                            smallBoard[playOnB / 10][playOnB % 10][i][j] = -1;
+                            this.smallBoard[playOnB / 10][playOnB % 10][i][j] = -1;
                         }
                     }
 
@@ -115,7 +115,7 @@ public class GameBoard {
                 }
 
                 // Check for a draw in the big board or no more play options in the small boards
-                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(smallBoard)) {
+                if (BigBoardDrawCheck(bigBoard) || NoMorePlayOptionsDrawCheck(this.smallBoard)) {
                     return "Draw";
                 }
 

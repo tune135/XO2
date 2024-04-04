@@ -25,8 +25,8 @@ public class GameABot20 extends AppCompatActivity {
     int playS;
     int playB;
     String nextTurnPlayString;
-    int nextTurnPlayNumberBBoard;
-    int nextTurnPlayNumberSBoard;
+    int nextTurnPlayNumberBBoard = -1;
+    int nextTurnPlayNumberSBoard = -1;
     Intent intent;
     CountDownTimer countDownTimer;
     boolean timerRunning = false;
@@ -61,21 +61,24 @@ public class GameABot20 extends AppCompatActivity {
             }
         }
 
+        turnView = findViewById(R.id.turn2);
+
         // Generate a random player number (1 or -1) and initialize the turnView
         Random random = new Random();
         int randomValue = random.nextInt(2);
-        int playerNumber = (randomValue == 0) ? -1 : 1;
-
-        turnView = findViewById(R.id.turn2);
-
-        // Initialize the Bot based on the random player number
-        if (playerNumber == 1) {
+        int playerNumber;
+        if(randomValue == 1){
+            playerNumber = 1;
+            // Initialize the Bot based on the random player number
             bot = new Bot(board, -1);
             turnView.setText("Your Turn (X)");
-        } else if (playerNumber == -1) {
+        } else{
+            playerNumber = -1;
+            // Initialize the Bot based on the random player number
             bot = new Bot(board, 1);
             turnView.setText("Your Turn (O)");
         }
+
         CheckPlay();
     }
 
@@ -95,7 +98,7 @@ public class GameABot20 extends AppCompatActivity {
 
     // Method to check the play and call BotClickButton or ApplyTimer accordingly
     public void CheckPlay() {
-        if (Objects.equals(board.getTurn(), "X") && bot.getBotNum() == 1 || Objects.equals(board.getTurn(), "O") && bot.getBotNum() == -1) {
+        if ((Objects.equals(board.getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(board.getTurn(), "O") && bot.getBotNum() == -1)) {
             BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberBBoard);
         } else {
             ApplyTimer();
@@ -203,7 +206,6 @@ public class GameABot20 extends AppCompatActivity {
             }
         } else {
             NextTurn();
-            CheckPlay();
         }
     }
 
@@ -235,7 +237,7 @@ public class GameABot20 extends AppCompatActivity {
                 }
             }
         }
-        return;
+        CheckPlay();
     }
 
     // Method to reset buttons to initial state
@@ -256,6 +258,10 @@ public class GameABot20 extends AppCompatActivity {
 
     // Method to simulate bot click on a button
     public void BotClickButton(int playSBot, int playBBot) {
+        if(playBBot == -1){
+            playBBot = playSBot / 100;
+            playSBot = playSBot % 100;
+        }
         int boardIndexB = playBBot / 10;
         int boardIndexS = playBBot % 10;
         int buttonIndexB = playSBot / 10;

@@ -84,10 +84,11 @@ public class Bot {
     public int playBot(int boardPlay) {
         // Initialize play
         this.botPlay = 0;
-        if (boardPlay == -1) { //-1 for any play
+        if (boardPlay == -1) { //-1 for any play and return the full id of the button small board and big board
             int bestPlayProp = 0;
             int nowPlayProp;
             int nowBotPlay;
+            int bestPlayBigBoard = 0;
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     if(this.gb.getBigBoard()[i][j] == 0)
@@ -96,11 +97,13 @@ public class Bot {
                         nowPlayProp = this.playPossibility[this.botPlay /10][this.botPlay % 10];
                         if(bestPlayProp < nowPlayProp){
                             this.botPlay = nowBotPlay;
+                            bestPlayBigBoard = i * 10 + j;
                             bestPlayProp = nowPlayProp;
                         }
                     }
                 }
             }
+            this.botPlay = bestPlayBigBoard * 100 + this.botPlay;
         } else {
             // Initialize play
             for (int i = 0; i < 3; i++) {

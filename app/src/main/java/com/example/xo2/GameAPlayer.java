@@ -347,8 +347,6 @@ public class GameAPlayer extends AppCompatActivity {
 
     // Method to handle the next turn and update clickable buttons
     public void NextTurn() {
-
-
         ResetButtons();
         if (Objects.equals(nextTurnPlayString, "any")) {
             nextTurnPlayNumberSBoard = -1;
@@ -384,9 +382,9 @@ public class GameAPlayer extends AppCompatActivity {
             for (int b = 0; b < 3; b++) {
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
+                        smallBoardButtons[a][b][i][j].setClickable(false);
                         if (board.getSmallBoard()[a][b][i][j] == 0) {
                             smallBoardButtons[a][b][i][j].setImageResource(R.drawable.ic_empty);
-                            smallBoardButtons[a][b][i][j].setClickable(false);
                         }
                     }
                 }
