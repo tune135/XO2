@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ChooseGame">
 
-    <TextView
-        android:id="@+id/Losses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Losses: 0"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/Wins"
-        app:layout_constraintTop_toBottomOf="@+id/Wins" />
-
-    <TextView
-        android:id="@+id/Draws"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Draws: 0"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/Losses"
-        app:layout_constraintTop_toBottomOf="@+id/Losses" />
 
     <TextView
         android:id="@+id/textView"
@@ -52,42 +35,90 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/player_name"
-        android:layout_width="319dp"
-        android:layout_height="85dp"
-        android:text="Welcome (his player name)"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.085" />
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/Wins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Wins: 0"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/player_name"
-        app:layout_constraintTop_toBottomOf="@+id/player_name" />
+        <TextView
+            android:id="@+id/playerNicknameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="player_nickname" />
 
-    <Button
-        android:id="@+id/StartGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
-        android:layout_marginBottom="114dp"
-        android:onClick="NewGame"
-        android:text="please choose a difficulty level"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Draws"
-        app:layout_constraintVertical_bias="1.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="wins" />
+
+            <TextView
+                android:id="@+id/winsTextView"
+                android:layout_width="184dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="losses" />
+
+            <TextView
+                android:id="@+id/lossesTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="draws" />
+
+            <TextView
+                android:id="@+id/drawsTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                android:gravity="right" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/startGameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="start_game" />
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

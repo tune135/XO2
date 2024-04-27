@@ -84,35 +84,34 @@ public class Bot {
     public int playBot(int boardPlay) {
         // Initialize play
         this.botPlay = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                this.playPossibility[i][j] = 0;
+            }
+        }
         if (boardPlay == -1) { //-1 for any play and return the full id of the button small board and big board
             int bestPlayProp = 0;
             int nowPlayProp;
             int nowBotPlay;
+            int bestBotPlay = 0;
             int bestPlayBigBoard = 0;
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     if(this.gb.getBigBoard()[i][j] == 0)
                     {
-                        nowBotPlay = playBot(i * 10 + j);
+                        nowBotPlay = shit(i * 10 + j);
                         nowPlayProp = this.playPossibility[this.botPlay /10][this.botPlay % 10];
                         if(bestPlayProp < nowPlayProp){
-                            this.botPlay = nowBotPlay;
+                            bestBotPlay = nowBotPlay;
                             bestPlayBigBoard = i * 10 + j;
                             bestPlayProp = nowPlayProp;
                         }
                     }
                 }
             }
-            this.botPlay = bestPlayBigBoard * 100 + this.botPlay;
+            this.botPlay = bestPlayBigBoard * 100 + bestBotPlay;
         } else {
-            // Initialize play
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    this.playPossibility[i][j] = this.gb.getSmallBoard()[boardPlay / 10][boardPlay % 10][i][j];
-                }
-            }
             while (canWinSBoard(boardPlay)) {
-                // Copy the small board state to playPossibility
                 if (canWinBBoard()) {
                     this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 10;//A number that isn't 1, -1, or 0 to show the how much this option is good
                     return this.botPlay;
@@ -400,5 +399,101 @@ public class Bot {
         }
 
         return false; // Player cannot win on the next move
+    }
+
+
+
+
+    public int shit(int boardPlay){
+        // Initialize play
+        this.botPlay = 0;
+        while (canWinSBoard(boardPlay)) {
+            // Copy the small board state to playPossibility
+            if (canWinBBoard()) {
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 10;//A number that isn't 1, -1, or 0 to show the how much this option is good
+                return this.botPlay;
+            } else if (otherPlayerWinSBoardNextTurn()) {
+                // Mark the position as not allowing the opponent to win
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 6; //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else if (otherPlayerCanPlayAnywhere()) {
+                // Mark the position as available for the opponent to play
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 6;//A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else {
+                return this.botPlay;
+            }
+        }
+        if (isMiddleAvailableForCatching(boardPlay)) {
+            if (otherPlayerWinSBoardNextTurn()) {
+                // Mark the position as not allowing the opponent to win after catching the middle
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 5;     //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else if (otherPlayerCanPlayAnywhere()) {
+                // Mark the position as available for the opponent to play after catching the middle
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 5;     //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else {  // The numbers are different, so you can tell if he wins the board or not at this play
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 9;     //A number that isn't 1, -1, or 0 to show the how much this option is good
+                return this.botPlay;
+            }
+        }
+        while (canCatchRandomCorner(boardPlay)) {
+            if (otherPlayerWinSBoardNextTurn()) {
+                // Mark the position as available for the opponent to play after catching a random corner
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 4;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else if (otherPlayerCanPlayAnywhere()) {
+                // Mark the position as available for the opponent to play after catching a random corner
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 4;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else {
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 8;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+                return this.botPlay;
+            }
+        }
+        while (canCatchRandomMiddleSide(boardPlay)) {
+            if (otherPlayerWinSBoardNextTurn()) {
+                // Mark the position as available for the opponent to play after catching a random middle side
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 3;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else if (otherPlayerCanPlayAnywhere()) {
+                // Mark the position as available for the opponent to play after catching a random middle side
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 3;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+            } else {
+                this.playPossibility[this.botPlay / 10][this.botPlay % 10] = 7;    //A number that isn't 1, -1, or 0 to show the how much this option is good
+                return this.botPlay;
+            }
+        }
+
+
+        // Check positions where the bot can win the small board, but the player next turn can win a small board or play anywhere
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.playPossibility[i][j] == 6){
+                    this.botPlay = i * 10 + j;
+                    return this.botPlay;
+                }
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.playPossibility[i][j] == 5){
+                    this.botPlay = i * 10 + j;
+                    return this.botPlay;
+                }
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.playPossibility[i][j] == 4){
+                    this.botPlay = i * 10 + j;
+                    return this.botPlay;
+                }
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.playPossibility[i][j] == 3){
+                    this.botPlay = i * 10 + j;
+                    return this.botPlay;
+                }
+            }
+        }
+
+        return this.botPlay;
     }
 }

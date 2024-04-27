@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 import java.util.Random;
@@ -98,7 +99,7 @@ public class GameABot20 extends AppCompatActivity {
 
     // Method to check the play and call BotClickButton or ApplyTimer accordingly
     public void CheckPlay() {
-        if ((Objects.equals(board.getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(board.getTurn(), "O") && bot.getBotNum() == -1)) {
+        if ((Objects.equals(bot.getGb().getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(bot.getGb().getTurn(), "O") && bot.getBotNum() == -1)) {
             BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberBBoard);
         } else {
             ApplyTimer();
@@ -161,14 +162,15 @@ public class GameABot20 extends AppCompatActivity {
     // Method to handle player's move
     public void Play(View view) {
         // Identify the clicked ImageButton
-        for (int a = 0; a < 3; a++) {
-            for (int b = 0; b < 3; b++) {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
+        boolean found = false;
+        for (int a = 0; a < 3 && !found; a++) {
+            for (int b = 0; b < 3 && !found; b++) {
+                for (int i = 0; i < 3 && !found; i++) {
+                    for (int j = 0; j < 3 && !found; j++) {
                         if (smallBoardButtons[a][b][i][j].getId() == view.getId()) {
                             playS = i * 10 + j;
                             playB = a * 10 + b;
-                            break;
+                            found = true; // Set the flag to true to break out of loops
                         }
                     }
                 }
@@ -176,16 +178,27 @@ public class GameABot20 extends AppCompatActivity {
         }
 
         // Set the image resource based on the player's turn
-        if (Objects.equals(board.getTurn(), "X")) {
+        if (Objects.equals(bot.getGb().getTurn(), "X")) {
             smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
-        } else if (Objects.equals(board.getTurn(), "O")) {
+        } else if (Objects.equals(bot.getGb().getTurn(), "O")) {
             smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
         }
 
         // Get the result of the game play
-        nextTurnPlayString = board.gamePlay(playS, playB);
+        nextTurnPlayString = bot.getGb().gamePlay(playS, playB);
 
-
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(board.getBigBoard()[i][j] == 1){
+                    ResetAllButtonsForOneSBoard(i * 10 + j);
+                    bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
+                }
+                else if(board.getBigBoard()[i][j] == -1){
+                    ResetAllButtonsForOneSBoard(i * 10 + j);
+                    bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
+                }
+            }
+        }
 
         // Check the result of the game play and navigate to EndGame activity accordingly
         if (Objects.equals(nextTurnPlayString, "X")) {
@@ -206,6 +219,7 @@ public class GameABot20 extends AppCompatActivity {
             }
         } else {
             NextTurn();
+            CheckPlay();
         }
     }
 
@@ -218,7 +232,7 @@ public class GameABot20 extends AppCompatActivity {
                 for (int b = 0; b < 3; b++) {
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 3; j++) {
-                            if (board.getSmallBoard()[a][b][i][j] == 0) {
+                            if (bot.getGb().getSmallBoard()[a][b][i][j] == 0) {
                                 smallBoardButtons[a][b][i][j].setImageResource(R.drawable.ic_yellow);
                                 smallBoardButtons[a][b][i][j].setClickable(true);
                             }
@@ -230,14 +244,14 @@ public class GameABot20 extends AppCompatActivity {
             nextTurnPlayNumberSBoard = Integer.parseInt(nextTurnPlayString);
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (board.getSmallBoard()[nextTurnPlayNumberSBoard / 10][nextTurnPlayNumberSBoard % 10][i][j] == 0) {
+                    if (bot.getGb().getSmallBoard()[nextTurnPlayNumberSBoard / 10][nextTurnPlayNumberSBoard % 10][i][j] == 0) {
                         smallBoardButtons[nextTurnPlayNumberSBoard / 10][nextTurnPlayNumberSBoard % 10][i][j].setImageResource(R.drawable.ic_yellow);
                         smallBoardButtons[nextTurnPlayNumberSBoard / 10][nextTurnPlayNumberSBoard % 10][i][j].setClickable(true);
                     }
                 }
             }
         }
-        CheckPlay();
+
     }
 
     // Method to reset buttons to initial state
@@ -246,7 +260,7 @@ public class GameABot20 extends AppCompatActivity {
             for (int b = 0; b < 3; b++) {
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
-                        if (board.getSmallBoard()[a][b][i][j] == 0) {
+                        if (bot.getGb().getSmallBoard()[a][b][i][j] == 0) {
                             smallBoardButtons[a][b][i][j].setImageResource(R.drawable.ic_empty);
                             smallBoardButtons[a][b][i][j].setClickable(false);
                         }
@@ -273,15 +287,27 @@ public class GameABot20 extends AppCompatActivity {
                 buttonIndexB >= 0 && buttonIndexB < 3 &&
                 buttonIndexS >= 0 && buttonIndexS < 3) {
 
-            if (smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].isClickable()) {
+            //if (smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].isClickable()) {
                 smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].performClick();
-            } else {
-//                intent = new Intent(this, EndGame.class);
-//                startActivity(intent); // player win
-            }
+//            } else {
+////                intent = new Intent(this, EndGame.class);
+////                startActivity(intent); // player win
+//
+//                Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
+//            }
         } else {
             intent = new Intent(this, EndGame.class);
             startActivity(intent); // player win
+        }
+    }
+
+
+    public void ResetAllButtonsForOneSBoard(int sBoard) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                smallBoardButtons[sBoard / 10][sBoard % 10][i][j].setVisibility(View.INVISIBLE);
+                smallBoardButtons[sBoard / 10][sBoard % 10][i][j].setClickable(false);
+            }
         }
     }
 }

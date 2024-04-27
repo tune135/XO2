@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                Intent intent = new Intent(context, OnlineCode.class); //OnlineCode
+                Intent intent = new Intent(context, ChooseGame.class); //OnlineCode
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in
@@ -213,7 +213,20 @@ public class FirebaseHandler {
         return false;
     }
 
-
+    // Method to update player's game statistics in the database
+    public void updateGameStatistics(GameStatistics gameStatistics) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            mDatabase.child("players").child(currentUser.getUid()).child("gameStatistics").setValue(gameStatistics)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, "Game statistics updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Failed to update game statistics", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
 
 
 }

@@ -373,7 +373,6 @@ public class GameAPlayer extends AppCompatActivity {
                 }
             }
         }
-        return;
     }
 
     // Method to reset buttons to initial state
@@ -393,7 +392,6 @@ public class GameAPlayer extends AppCompatActivity {
     }
 
     public void ResetAllButtonsForOneSBoard(int sBoard) {
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 smallBoardButtons[sBoard / 10][sBoard % 10][i][j].setVisibility(View.INVISIBLE);
