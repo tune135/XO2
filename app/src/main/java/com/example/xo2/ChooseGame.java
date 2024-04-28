@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,8 @@ public class ChooseGame extends AppCompatActivity {
     private Button startGameButton;
     private TextView winsTextView, lossesTextView, drawsTextView;
     private FirebaseHandler firebaseHandler;
+    private static final int PICK_IMAGE_REQUEST = 1; // Request code for picking an image
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +65,32 @@ public class ChooseGame extends AppCompatActivity {
         firebaseHandler.getPlayerData(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Player player = dataSnapshot.getValue(Player.class);
-                if (player != null) {
-                    playerNicknameTextView.setText(player.getNickname());
-                    GameStatistics gameStatistics = player.getGameStatistics();
-                    if (gameStatistics != null) {
-                        winsTextView.setText(String.valueOf(gameStatistics.getWins()));
-                        lossesTextView.setText(String.valueOf(gameStatistics.getLosses()));
-                        drawsTextView.setText(String.valueOf(gameStatistics.getDraws()));
+                if (dataSnapshot.exists()) {
+                    Player player = dataSnapshot.getValue(Player.class);
+                    if (player != null) {
+                        // Ensure that the player's nickname is not null before setting it
+                        if (player.getNickname() != null) {
+                            playerNicknameTextView.setText(player.getNickname());
+                        } else {
+                            playerNicknameTextView.setText("Default Nickname"); // Set a default or prompt for a new nickname
+                        }
+
+                        // Assuming getGameStatistics() is properly implemented in the Player class
+                        GameStatistics gameStatistics = player.getGameStatistics();
+                        if (gameStatistics != null) {
+                            winsTextView.setText(String.valueOf(gameStatistics.getWins()));
+                            lossesTextView.setText(String.valueOf(gameStatistics.getLosses()));
+                            drawsTextView.setText(String.valueOf(gameStatistics.getDraws()));
+                        } else {
+                            // Handle case where game statistics are not available
+                            winsTextView.setText("0");
+                            lossesTextView.setText("0");
+                            drawsTextView.setText("0");
+                        }
                     }
                 }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -102,26 +120,48 @@ public class ChooseGame extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.Photo) {
-            // Handle change photo option click
-            // You can launch an image picker here
-            // Example: launchImagePicker();
-            return true;
-        } else if (id == R.id.Nickname) {
-            // Handle change nickname option click
-            // You can navigate to another activity for nickname change
-            // Example: navigateToChangeNicknameActivity();
-            return true;
-        } else if (id == R.id.Difficulty) {
-            // Handle change game difficulty option click
-            // Example: showDifficultyDialog();
-            return true;
-        } else if (id == R.id.Exit) {
-            // Handle exit option click
-            // Example: exitApp();
-            return true;
+        switch (id) {
+            case R.id.Photo:
+                launchImagePicker();
+                return true;
+            case R.id.Nickname:
+                navigateToChangeNicknameActivity();
+                return true;
+            case R.id.Difficulty:
+                showDifficultyDialog();
+                return true;
+            case R.id.Exit:
+                exitApp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+    private void launchImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    private void navigateToChangeNicknameActivity() {
+        Intent intent = new Intent(this, ChangeNicknameActivity.class);
+        startActivity(intent);
+    }
+
+    private void showDifficultyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Difficulty");
+        String[] difficulties = {"Easy", "Medium", "Hard"};
+        builder.setItems(difficulties, (dialog, which) -> {
+            // Handle difficulty selection
+            Toast.makeText(this, "Selected: " + difficulties[which], Toast.LENGTH_SHORT).show();
+        });
+        builder.show();
+    }
+
+    private void exitApp() {
+        finishAffinity(); // Close all activities and exit app for Android 4.1 and higher
+    }
+
 }
