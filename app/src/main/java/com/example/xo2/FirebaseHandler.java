@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                Intent intent = new Intent(context, ChooseGame.class); //OnlineCode
+                intent = new Intent(context, GameABot20.class); //OnlineCode
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in
@@ -76,7 +76,7 @@ public class FirebaseHandler {
                                     Toast.makeText(context, "Registered Successfully", Toast.LENGTH_SHORT).show();
 
                                     // Navigate to SignIn1 activity upon successful registration
-                                    Intent intent = new Intent(context, SignIn1.class);
+                                    intent = new Intent(context, SignIn1.class);
                                     context.startActivity(intent);
                                 } else {
                                     // Show a short toast message indicating unsuccessful registration in database
@@ -119,85 +119,6 @@ public class FirebaseHandler {
         context.startActivity(intent);
     }
 
-    // Method to get the current player's data from the database
-    public void getPlayerData() {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            DatabaseReference playerRef = mDatabase.child("players").child(currentUser.getUid());
-            playerRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    // This method is called when the data at the specified database reference changes
-                    Player player = dataSnapshot.getValue(Player.class);
-                    if (player != null) {
-                        // Handle the retrieved player data
-                        // For example, update UI or perform any necessary actions
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle errors in reading data
-                    Toast.makeText(context, "Failed to retrieve player data", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-    // Method to update the player's nickname in the database
-    public void updatePlayerNickname(String newNickname) {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            mDatabase.child("players").child(currentUser.getUid()).child("nickname").setValue(newNickname)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Nickname updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Failed to update nickname", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
-
-    // Method to update the player's photo in the database
-    public void updateUserPhoto(byte[] imageData) {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            mDatabase.child("players").child(currentUser.getUid()).child("photo").setValue(imageData)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Photo updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Failed to update photo", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
-    public void joinCode(String code, ValueEventListener valueEventListener) {
-        DatabaseReference codesRef = FirebaseDatabase.getInstance().getReference().child("Codes");
-        codesRef.addListenerForSingleValueEvent(valueEventListener);
-    }
-
-    public void createCode(String code, OnCompleteListener<Void> onCompleteListener, OnFailureListener onFailureListener) {
-        DatabaseReference codesRef = FirebaseDatabase.getInstance().getReference().child("Codes");
-        codesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (isValueAvailable(snapshot, code)) {
-                    // Code already exists
-                    onCompleteListener.onComplete(Tasks.forResult(null)); // Use Tasks utility class here
-                } else {
-                    // Code does not exist, create it
-                    codesRef.push().setValue(code).addOnCompleteListener(onCompleteListener).addOnFailureListener(onFailureListener);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Handle onCancelled
-            }
-        });
-    }
 
     private boolean isValueAvailable(DataSnapshot snapshot, String code) {
         Iterable<DataSnapshot> data = snapshot.getChildren();
@@ -213,20 +134,9 @@ public class FirebaseHandler {
         return false;
     }
 
-    // Method to update player's game statistics in the database
-    public void updateGameStatistics(GameStatistics gameStatistics) {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            mDatabase.child("players").child(currentUser.getUid()).child("gameStatistics").setValue(gameStatistics)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Game statistics updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Failed to update game statistics", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
+
+
+
 
 
 }

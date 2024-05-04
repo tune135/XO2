@@ -26,7 +26,6 @@ public class GameABot20 extends AppCompatActivity {
     int playS;
     int playB;
     String nextTurnPlayString;
-    int nextTurnPlayNumberBBoard = -1;
     int nextTurnPlayNumberSBoard = -1;
     Intent intent;
     CountDownTimer countDownTimer;
@@ -100,7 +99,7 @@ public class GameABot20 extends AppCompatActivity {
     // Method to check the play and call BotClickButton or ApplyTimer accordingly
     public void CheckPlay() {
         if ((Objects.equals(bot.getGb().getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(bot.getGb().getTurn(), "O") && bot.getBotNum() == -1)) {
-            BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberBBoard);
+            BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberSBoard);
         } else {
             ApplyTimer();
         }
@@ -180,8 +179,10 @@ public class GameABot20 extends AppCompatActivity {
         // Set the image resource based on the player's turn
         if (Objects.equals(bot.getGb().getTurn(), "X")) {
             smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+            smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setClickable(false);
         } else if (Objects.equals(bot.getGb().getTurn(), "O")) {
             smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
+            smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setClickable(false);
         }
 
         // Get the result of the game play
@@ -276,25 +277,26 @@ public class GameABot20 extends AppCompatActivity {
             playBBot = playSBot / 100;
             playSBot = playSBot % 100;
         }
-        int boardIndexB = playBBot / 10;
-        int boardIndexS = playBBot % 10;
-        int buttonIndexB = playSBot / 10;
-        int buttonIndexS = playSBot % 10;
+        int boardIndexI = playBBot / 10;
+        int boardIndexJ = playBBot % 10;
+        int buttonIndexI = playSBot / 10;
+        int buttonIndexJ = playSBot % 10;
 
         // Check if the indices are within bounds
-        if (boardIndexB >= 0 && boardIndexB < 3 &&
-                boardIndexS >= 0 && boardIndexS < 3 &&
-                buttonIndexB >= 0 && buttonIndexB < 3 &&
-                buttonIndexS >= 0 && buttonIndexS < 3) {
+        if (boardIndexI >= 0 && boardIndexI < 3 &&
+                boardIndexJ >= 0 && boardIndexJ < 3 &&
+                buttonIndexI >= 0 && buttonIndexI < 3 &&
+                buttonIndexJ >= 0 && buttonIndexJ < 3) {
 
-            //if (smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].isClickable()) {
-                smallBoardButtons[boardIndexB][boardIndexS][buttonIndexB][buttonIndexS].performClick();
-//            } else {
-////                intent = new Intent(this, EndGame.class);
-////                startActivity(intent); // player win
-//
-//                Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
-//            }
+            if (smallBoardButtons[boardIndexI][boardIndexJ][buttonIndexI][buttonIndexJ].isClickable()) {
+                smallBoardButtons[boardIndexI][boardIndexJ][buttonIndexI][buttonIndexJ].performClick();
+            } else {
+
+                Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
+                smallBoardButtons[boardIndexI][boardIndexJ][buttonIndexI][buttonIndexJ].performClick();
+//                intent = new Intent(this, EndGame.class);
+//                startActivity(intent); // player win
+            }
         } else {
             intent = new Intent(this, EndGame.class);
             startActivity(intent); // player win

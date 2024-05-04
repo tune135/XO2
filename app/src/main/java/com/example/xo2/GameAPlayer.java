@@ -304,9 +304,11 @@ public class GameAPlayer extends AppCompatActivity {
             // Set the image resource based on the player's turn
             if (Objects.equals(board.getTurn(), "X")) {
                 smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_x);
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setClickable(false);
                 turnView.setText("Player O's turn");
             }else if (Objects.equals(board.getTurn(), "O")) {
                 smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setImageResource(R.drawable.ic_o);
+                smallBoardButtons[playB / 10][playB % 10][playS / 10][playS % 10].setClickable(false);
                 turnView.setText("Player X's turn");
             }
 
@@ -384,6 +386,8 @@ public class GameAPlayer extends AppCompatActivity {
                         smallBoardButtons[a][b][i][j].setClickable(false);
                         if (board.getSmallBoard()[a][b][i][j] == 0) {
                             smallBoardButtons[a][b][i][j].setImageResource(R.drawable.ic_empty);
+                            smallBoardButtons[a][b][i][j].setClickable(false);
+
                         }
                     }
                 }

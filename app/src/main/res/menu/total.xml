@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/Photo"
-        android:title="Change profile photo" />
-
-    <item
-        android:id="@+id/Nickname"
-        android:title="Change your Nickname" />
+        android:id="@+id/Rules"
+        android:title="Rules of the game" />
 
     <item
         android:id="@+id/Difficulty"
