@@ -8,10 +8,11 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -24,10 +25,22 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <service
-            android:name=".GameBoardService"
-            android:enabled="true"
-            android:exported="true"></service>
+            android:name=".MyForegroundService"
+            android:exported="false" />
+        <service
+            android:name=".NotificationService"
+            android:exported="false" />
 
+
+        <activity
+            android:name=".NotificationAndDB"
+            android:exported="false" />
+        <activity
+            android:name=".ChooseGame"
+            android:exported="false" />
+        <activity
+            android:name=".AfterPeriodOfTime"
+            android:exported="false" />
         <activity
             android:name=".GameRules"
             android:exported="false" />
@@ -38,16 +51,14 @@
             android:name=".EndGame"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".GameABot20"
             android:exported="false" />
         <activity
             android:name=".GameAPlayer"
             android:exported="false" />
         <activity
             android:name=".GameOptionsActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activity_capture_photo" -->
-        <!-- android:exported="false" /> &lt;!&ndash; Activities &ndash;&gt; -->
+            android:exported="false" />
         <activity
             android:name=".alert_dialog_wifi_on"
             android:exported="false" />
@@ -56,18 +67,17 @@
             android:exported="false" />
         <activity
             android:name=".SignIn1"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".ChooseGame" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
         <activity
-            android:name=".GameABot20"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Receiver -->
+        </activity>
+
         <receiver
             android:name=".InternetConnectionReceiver"
             android:enabled="true"
@@ -76,6 +86,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

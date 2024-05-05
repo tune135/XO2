@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                intent = new Intent(context, GameABot20.class); //OnlineCode
+                intent = new Intent(context, ChooseGame.class); //OnlineCode
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in

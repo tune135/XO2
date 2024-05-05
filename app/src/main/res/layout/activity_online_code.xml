@@ -20,15 +20,14 @@
         />
 
     <EditText
+        android:id="@+id/idEdtCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/idTVHead"
-        android:hint="Enter Code"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="46dp"
         android:layout_marginEnd="30dp"
-        android:id="@+id/idEdtCode"
-        android:layout_marginTop="20dp"
-        />
+        android:hint="Enter Code" />
 
     <Button
         android:id="@+id/idBtnCreate"
@@ -59,4 +58,16 @@
         android:visibility="gone"
         android:id="@+id/idPBLoading"
         />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="209dp"
+        android:layout_height="205dp"
+        android:layout_below="@+id/idBtnJoin"
+        android:layout_alignStart="@+id/idBtnJoin"
+        android:layout_alignEnd="@+id/idBtnJoin"
+        android:layout_marginStart="-60dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="-62dp"
+        app:srcCompat="@drawable/iconxo" />
 </RelativeLayout>
