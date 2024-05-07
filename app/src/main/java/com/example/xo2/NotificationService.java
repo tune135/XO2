@@ -43,7 +43,7 @@ public class NotificationService extends Service {
     }
 
     private Notification buildNotification() {
-        Intent notificationIntent = new Intent(this, ChooseGame.class);
+        Intent notificationIntent = new Intent(this, GameMenu.class);
 
         // Specify the PendingIntent flag, adding FLAG_IMMUTABLE for Android 12 and higher
         int flags = PendingIntent.FLAG_UPDATE_CURRENT;

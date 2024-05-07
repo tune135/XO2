@@ -119,16 +119,16 @@ public class Bot {
                         if (canWinBBoard()) {
                             this.playPriority[this.botPlay / 10][this.botPlay % 10] = 10;//A number that isn't 1, -1, or 0 to show the how much this option is good
                             return this.botPlay;
-                        } else if (otherPlayerWinSBoardNextTurn()) {
+                        } else if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                             // Mark the position as not allowing the opponent to win
                             if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 5){
                                 this.playPriority[this.botPlay / 10][this.botPlay % 10] = 5; //A number that isn't 1, -1, or 0 to show the how much this option is good
                             }
                         } else if (otherPlayerCanPlayAnywhere()) {
                             // Mark the position as available for the opponent to play
-                                if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 5){
-                                    this.playPriority[this.botPlay / 10][this.botPlay % 10] = 5;//A number that isn't 1, -1, or 0 to show the how much this option is good
-                                }
+                            if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 5){
+                                this.playPriority[this.botPlay / 10][this.botPlay % 10] = 5;//A number that isn't 1, -1, or 0 to show the how much this option is good
+                            }
                         } else {
                             return this.botPlay;
                         }
@@ -140,7 +140,7 @@ public class Bot {
                 for(int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         if(canOtherPlayerWinThisSmallBoard(this.gb.getSmallBoard()[boardPlay / 10][boardPlay % 10], -1, i, j)){
-                            if (otherPlayerWinSBoardNextTurn()) {
+                            if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                                 // Mark the position as not allowing the opponent to win after catching the middle
                                 if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 4){
                                     this.playPriority[this.botPlay / 10][this.botPlay % 10] = 4;     //A number that isn't 1, -1, or 0 to show the how much this option is good
@@ -162,7 +162,7 @@ public class Bot {
                 for(int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         if(canOtherPlayerWinThisSmallBoard(this.gb.getSmallBoard()[boardPlay / 10][boardPlay % 10], 1, i, j)){
-                            if (otherPlayerWinSBoardNextTurn()) {
+                            if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                                 // Mark the position as not allowing the opponent to win after catching the middle
                                 if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 4){
                                     this.playPriority[this.botPlay / 10][this.botPlay % 10] = 4;     //A number that isn't 1, -1, or 0 to show the how much this option is good
@@ -182,7 +182,7 @@ public class Bot {
 
             }
             if (isMiddleAvailableForCatching(boardPlay)) {
-                if (otherPlayerWinSBoardNextTurn()) {
+                if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                     // Mark the position as not allowing the opponent to win after catching the middle
                     if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 3){
                         this.playPriority[this.botPlay / 10][this.botPlay % 10] = 3;     //A number that isn't 1, -1, or 0 to show the how much this option is good
@@ -202,7 +202,7 @@ public class Bot {
                 for (int j = 0; j <= 2; j += 2){
                     // 00 02 20 22
                     if(canCatchIt(boardPlay, i, j)){
-                        if (otherPlayerWinSBoardNextTurn()) {
+                        if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                             // Mark the position as available for the opponent to play after catching a random corner
                             if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 2){
                                 this.playPriority[this.botPlay / 10][this.botPlay % 10] = 2;    //A number that isn't 1, -1, or 0 to show the how much this option is good
@@ -224,7 +224,7 @@ public class Bot {
                     if ((i == 0 && j == 1) || (i == 1 && j == 0) || (i == 1 && j == 2) || (i == 2 && j == 1)) {
                         //0(i) 1(j), 1(i) 0(j), 1(i) 2(j), 2(i) 1(j)
                         if(canCatchIt(boardPlay, i, j)){
-                            if (otherPlayerWinSBoardNextTurn()) {
+                            if (otherPlayerWinSBoardNextTurn(boardPlay)) {
                                 // Mark the position as available for the opponent to play after catching a random middle side
                                 if(this.playPriority[this.botPlay / 10][this.botPlay % 10] < 1){
                                     this.playPriority[this.botPlay / 10][this.botPlay % 10] = 1;    //A number that isn't 1, -1, or 0 to show the how much this option is good
@@ -301,15 +301,28 @@ public class Bot {
      *
      * @return True if the other player can win the small board on the next turn, false otherwise.
      */
-    public Boolean otherPlayerWinSBoardNextTurn() {
-        if (this.botNum == 1) {
-            return canWinNextMoveSmallBoard(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], -1);
-        } else if (this.botNum == -1) {
-            return canWinNextMoveSmallBoard(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], 1);
-        } else {
-            //error
-            return null;
+    public Boolean otherPlayerWinSBoardNextTurn(int board) {
+        if(board == this.botPlay) {
+            if (this.botNum == 1) {
+                return canWinNextMoveSmallBoardNew(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], -1);
+            } else if (this.botNum == -1) {
+                return canWinNextMoveSmallBoardNew(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], 1);
+            } else {
+                //error
+                return null;
+            }
         }
+        else{
+            if (this.botNum == 1) {
+                return canWinNextMoveSmallBoard(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], -1);
+            } else if (this.botNum == -1) {
+                return canWinNextMoveSmallBoard(this.gb.getSmallBoard()[this.botPlay / 10][this.botPlay % 10], 1);
+            } else {
+                //error
+                return null;
+            }
+        }
+
     }
 
     /**
@@ -388,7 +401,26 @@ public class Bot {
                 }
             }
         }
+        return false; // Player cannot win on the next move
+    }
 
+    public boolean canWinNextMoveSmallBoardNew(int[][] board, int player) {
+        // Check each empty spot on the board
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == 0 && (i * 10 + j != this.botPlay)) {
+                    // Make the move and check if it results in a win
+                    board[i][j] = player;
+                    if (this.gb.WinCheck(board, player)) {
+                        // Undo the move
+                        board[i][j] = 0;
+                        return true; // Player can win on the next move
+                    }
+                    // Undo the move
+                    board[i][j] = 0;
+                }
+            }
+        }
         return false; // Player cannot win on the next move
     }
 
@@ -417,22 +449,16 @@ public class Bot {
      * @return true if the player can win on the next move, false otherwise.
      */
     public boolean canWinNextMoveBigBoard(int[][] board, int player) {
-        // Check each empty spot on the board
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == 0) {
-                    // Make the move and check if it results in a win
-                    board[i][j] = player;
-                    if (this.gb.WinCheck(board, player)) {
-                        // Undo the move
-                        this.botPlay = i * 10 + j;
-                        board[i][j] = 0;
-                        return true; // Player can win on the next move
-                    }
-                    // Undo the move
-                    board[i][j] = 0;
-                }
+        if (board[this.botPlay / 10][this.botPlay % 10] == 0) {
+            // Make the move and check if it results in a win
+            board[this.botPlay / 10][this.botPlay % 10] = player;
+            if (this.gb.WinCheck(board, player)) {
+                // Undo the move
+                board[this.botPlay / 10][this.botPlay % 10] = 0;
+                return true; // Player can win on the next move
             }
+            // Undo the move
+            board[this.botPlay / 10][this.botPlay % 10] = 0;
         }
 
         return false; // Player cannot win on the next move

@@ -3,13 +3,10 @@
     <item
         android:id="@+id/Rules"
         android:title="Rules of the game" />
-
     <item
         android:id="@+id/Difficulty"
-        android:title="Change game difficulty" />
-
+        android:title="Change game" />
     <item
         android:id="@+id/Exit"
         android:title="Exit" />
-
 </menu>

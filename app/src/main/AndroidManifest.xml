@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,23 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
-        <service
-            android:name=".MyForegroundService"
+        <activity
+            android:name=".GameMenu"
             android:exported="false" />
+
         <service
             android:name=".NotificationService"
             android:exported="false" />
 
-
-        <activity
-            android:name=".NotificationAndDB"
-            android:exported="false" />
-        <activity
-            android:name=".ChooseGame"
-            android:exported="false" />
-        <activity
-            android:name=".AfterPeriodOfTime"
-            android:exported="false" />
         <activity
             android:name=".GameRules"
             android:exported="false" />
@@ -55,9 +47,6 @@
             android:exported="false" />
         <activity
             android:name=".GameAPlayer"
-            android:exported="false" />
-        <activity
-            android:name=".GameOptionsActivity"
             android:exported="false" />
         <activity
             android:name=".alert_dialog_wifi_on"
@@ -86,7 +75,6 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

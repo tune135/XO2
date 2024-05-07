@@ -71,15 +71,17 @@ public class GameABot20 extends AppCompatActivity {
             playerNumber = 1;
             // Initialize the Bot based on the random player number
             bot = new Bot(board, -1);
-            turnView.setText("Your Turn (X)");
+            turnView.setText("Your Turn (X)"); //the player starts
+            CheckPlay();
         } else{
             playerNumber = -1;
             // Initialize the Bot based on the random player number
             bot = new Bot(board, 1);
-            turnView.setText("Your Turn (O)");
+            turnView.setText("Your Turn (O)"); //the bot starts
+            BotClickButton(11, 11);
         }
 
-        CheckPlay();
+
     }
 
     // Helper method to find an ImageButton by coordinates
@@ -205,19 +207,27 @@ public class GameABot20 extends AppCompatActivity {
         if (Objects.equals(nextTurnPlayString, "X")) {
             if (bot.getBotNum() == 1) {
                 intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "You Lost \nNo Worries You Can Play Again");
                 startActivity(intent); // player lose
             } else {
                 intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "You won! \nWell Played You Defeated The Bot");
                 startActivity(intent); // player win
             }
         } else if (Objects.equals(nextTurnPlayString, "O")) {
             if (bot.getBotNum() == 1) {
                 intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "You won! \nWell Played You Defeated The Bot");
                 startActivity(intent); // player win
             } else {
                 intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "You Lost \nNo Worries You Can Play Again");
                 startActivity(intent); // player lose
             }
+        } else if (Objects.equals(nextTurnPlayString, "Draw")) {
+            intent = new Intent(this, EndGame.class);
+            intent.putExtra("result", "The Game Ended As A Draw");
+            startActivity(intent); // Draw
         } else {
             NextTurn();
             CheckPlay();
@@ -293,12 +303,14 @@ public class GameABot20 extends AppCompatActivity {
             } else {
 
                 Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
-                smallBoardButtons[boardIndexI][boardIndexJ][buttonIndexI][buttonIndexJ].performClick();
-//                intent = new Intent(this, EndGame.class);
-//                startActivity(intent); // player win
+                intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
+                startActivity(intent); // player win
             }
         } else {
+            Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
             intent = new Intent(this, EndGame.class);
+            intent.putExtra("result", "You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
             startActivity(intent); // player win
         }
     }

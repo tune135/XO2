@@ -44,7 +44,7 @@ public class FirebaseHandler {
                 Toast.makeText(context, "Sign in Successful", Toast.LENGTH_SHORT).show();
 
                 // Navigate to ChooseGame activity upon successful sign-in
-                intent = new Intent(context, ChooseGame.class); //OnlineCode
+                intent = new Intent(context, GameMenu.class); //OnlineCode
                 context.startActivity(intent);
             } else {
                 // Show a short toast message indicating unsuccessful sign-in
@@ -100,39 +100,16 @@ public class FirebaseHandler {
 
     }
 
-    public void setSelectedDifficulty(String difficulty) {
-        this.selectedDifficulty = difficulty;
-    }
-
-    // Method to get the selected difficulty
-    public String getSelectedDifficulty() {
-        return selectedDifficulty;
-    }
-
     public void signOut() {
         auth.signOut();
         // Show a short toast message indicating successful sign-out
         Toast.makeText(context, "Sign out Successful", Toast.LENGTH_SHORT).show();
 
         // Navigate to SignIn1 activity upon successful sign-out
-        Intent intent = new Intent(context, SignIn1.class);
+        intent = new Intent(context, SignIn1.class);
         context.startActivity(intent);
     }
 
-
-    private boolean isValueAvailable(DataSnapshot snapshot, String code) {
-        Iterable<DataSnapshot> data = snapshot.getChildren();
-        Iterator<DataSnapshot> iterator = data.iterator();
-        while (iterator.hasNext()) {
-            DataSnapshot dataSnapshot = iterator.next();
-            String value = dataSnapshot.getValue().toString();
-            if (value.equals(code)) {
-                Constants.keyValue = dataSnapshot.getKey().toString();
-                return true;
-            }
-        }
-        return false;
-    }
 
 
 
