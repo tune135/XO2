@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +27,8 @@ public class FirebaseHandler {
     private FirebaseAuth auth;
     private Context context;
     Intent intent;
-    private String selectedDifficulty;
     private DatabaseReference mDatabase;
+
 
     // Constructor to initialize FirebaseHandler with FirebaseAuth and Context
     public FirebaseHandler(FirebaseAuth auth, Context context) {
@@ -109,7 +110,6 @@ public class FirebaseHandler {
         intent = new Intent(context, SignIn1.class);
         context.startActivity(intent);
     }
-
 
 
 

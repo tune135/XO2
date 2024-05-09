@@ -14,42 +14,60 @@ import android.widget.Toast;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * The GameABot20 class handles the interactive gameplay between a human player and an AI bot
+ * in a tic-tac-toe game with a complex board structure.
+ */
 public class GameABot20 extends AppCompatActivity {
 
-    // Declare member variables
-    GridLayout[][] bigBoardGrids;
-    ImageButton[][][][] smallBoardButtons;
-    GameBoard board;
-    Bot bot;
-    TextView turnView;
-    TextView timerTextView;
-    int playS;
-    int playB;
-    String nextTurnPlayString;
-    int nextTurnPlayNumberSBoard = -1;
-    Intent intent;
-    CountDownTimer countDownTimer;
-    boolean timerRunning = false;
+    // Game components
+    GridLayout[][] bigBoardGrids; // GridLayout arrays for big tic-tac-toe boards
+    ImageButton[][][][] smallBoardButtons; // ImageButtons for the small tic-tac-toe boards within each big board cell
+    GameBoard board; // GameBoard object to manage the game state
+    Bot bot; // Bot object for AI logic
+    TextView turnView; // TextView to display whose turn it is
+    TextView timerTextView; // TextView for displaying the countdown timer
+    int playS; // Index for small board play
+    int playB; // Index for big board play
+    String nextTurnPlayString; // Stores string value of the next turn
+    int nextTurnPlayNumberSBoard = -1; // Next turn play index for small boards, initialized to -1
+    Intent intent; // Intent for navigating to different activities
+    CountDownTimer countDownTimer; // Timer object for turn timing
+    boolean timerRunning = false; // Flag to check if the timer is running
 
-
-    // Override the onCreate method to initialize the activity
+    /**
+     * Initializes the game UI and components on activity creation.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_abot20);
 
-        // Initialize the GameBoard
+        // Initialize game board and AI components
         board = new GameBoard();
+        initializeGridLayouts();
+        initializeImageButtons();
 
-        // Initialize GridLayouts for big boards
+        turnView = findViewById(R.id.turn2);
+        setupInitialPlayer();
+    }
+
+    /**
+     * Initializes GridLayouts for the big board cells.
+     */
+    private void initializeGridLayouts() {
         bigBoardGrids = new GridLayout[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 bigBoardGrids[i][j] = (GridLayout) FindViewGrid(i, j);
             }
         }
+    }
 
-        // Initialize ImageButtons for small boards
+    /**
+     * Initializes ImageButtons for each cell within the small boards.
+     */
+    private void initializeImageButtons() {
         smallBoardButtons = new ImageButton[3][3][3][3];
         for (int a = 0; a < 3; a++) {
             for (int b = 0; b < 3; b++) {
@@ -60,46 +78,48 @@ public class GameABot20 extends AppCompatActivity {
                 }
             }
         }
-
-        turnView = findViewById(R.id.turn2);
-
-        // Generate a random player number (1 or -1) and initialize the turnView
-        Random random = new Random();
-        int randomValue = random.nextInt(2);
-        int playerNumber;
-        if(randomValue == 1){
-            playerNumber = 1;
-            // Initialize the Bot based on the random player number
-            bot = new Bot(board, -1);
-            turnView.setText("Your Turn (X)"); //the player starts
-            CheckPlay();
-        } else{
-            playerNumber = -1;
-            // Initialize the Bot based on the random player number
-            bot = new Bot(board, 1);
-            turnView.setText("Your Turn (O)"); //the bot starts
-            BotClickButton(11, 11);
-        }
-
-
     }
 
-    // Helper method to find an ImageButton by coordinates
+    /**
+     * Determines initial player and initializes bot based on random selection.
+     */
+    private void setupInitialPlayer() {
+        Random random = new Random();
+        int playerNumber = random.nextInt(2) * 2 - 1; // Randomly assigns 1 or -1
+        bot = new Bot(board, -playerNumber);
+        String playerSymbol = playerNumber == 1 ? "X" : "O";
+        turnView.setText("Your Turn (" + playerSymbol + ")");
+        if (playerNumber == -1) {
+            BotClickButton(11, 11); // Let bot make the first move if it starts
+        } else {
+            CheckPlay(); // Check the play if the player starts
+        }
+    }
+
+    /**
+     * Finds an ImageButton by its ID constructed from its grid coordinates.
+     */
     public View FindViewImageButton(int a, int b, int i, int j) {
-        String buttonID = "imageButton" + Integer.toString(a) + Integer.toString(b) + Integer.toString(i) + Integer.toString(j);
+        String buttonID = "imageButton" + a + b + i + j;
         int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
         return findViewById(resID);
     }
 
-    // Helper method to find a GridLayout by coordinates
+    /**
+     * Finds a GridLayout by its ID constructed from its coordinates.
+     */
     public View FindViewGrid(int i, int j) {
-        String gridID = "grid" + Integer.toString(i) + Integer.toString(j);
+        String gridID = "grid" + i + j;
         int resID = getResources().getIdentifier(gridID, "id", getPackageName());
         return findViewById(resID);
     }
 
-    // Method to check the play and call BotClickButton or ApplyTimer accordingly
+    // Remaining methods handle gameplay logic such as managing player turns, checking game status,
+    // applying the timer, handling player input, managing the game board UI, and handling bot actions.
+
+    // Example of a method used to check the current play and make decisions:
     public void CheckPlay() {
+        // Check if it's bot's turn and let it play or start the timer for the human player
         if ((Objects.equals(bot.getGb().getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(bot.getGb().getTurn(), "O") && bot.getBotNum() == -1)) {
             BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberSBoard);
         } else {
@@ -107,29 +127,21 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-    // Method to apply a countdown timer
+    // Example method to apply a countdown timer for the human player's turn:
     public void ApplyTimer() {
         timerTextView = findViewById(R.id.timerTextView);
-
-        // Check if a timer is already running
         if (timerRunning) {
-            // Stop the existing timer
             stopTimer();
         }
-
-        // Start a new timer
-        countDownTimer = new CountDownTimer(120000, 1000) {
+        countDownTimer = new CountDownTimer(120000, 1000) { // 2 minutes timer
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
-                String timeString = String.format("Timer: %02d:%02d", seconds / 60, seconds % 60);
-                timerTextView.setText(timeString);
+                timerTextView.setText(String.format("Timer: %02d:%02d", seconds / 60, seconds % 60));
             }
-
             public void onFinish() {
                 RandomPlay();
             }
         }.start();
-
         timerRunning = true;
     }
 

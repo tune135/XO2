@@ -36,8 +36,7 @@ public class GameAPlayer extends AppCompatActivity {
     Intent intent;
     CountDownTimer countDownTimer;
     boolean timerRunning = false;
-
-    int activeUser = 1;
+    
 
 
     // Override the onCreate method to initialize the activity
