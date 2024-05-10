@@ -28,6 +28,7 @@ public class FirebaseHandler {
     private Context context;
     Intent intent;
     private DatabaseReference mDatabase;
+    private ChildEventListener gameEventListener;
 
 
     // Constructor to initialize FirebaseHandler with FirebaseAuth and Context
@@ -36,6 +37,13 @@ public class FirebaseHandler {
         this.context = context;
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
+    public FirebaseHandler(Context context) {
+        this.auth = FirebaseAuth.getInstance();
+        this.mDatabase = FirebaseDatabase.getInstance().getReference();
+        this.context = context;
+    }
+
+
 
     // Method to sign in with the provided email and password
     public void signIn(String email, String password) {
@@ -111,8 +119,33 @@ public class FirebaseHandler {
         context.startActivity(intent);
     }
 
+    public void addGameEventListener(String gameCode, ChildEventListener listener) {
+        mDatabase.child("data").child(gameCode).addChildEventListener(listener);
+    }
 
+    public void removeGameEventListener(String gameCode) {
+        if (gameEventListener != null) {
+            mDatabase.child("data").child(gameCode).removeEventListener(gameEventListener);
+        }
+    }
 
+    public void pushGameMove(String gameCode, Object move) {
+        mDatabase.child("data").child(gameCode).push().setValue(move);
+    }
+
+    public void clearGameData(String gameCode) {
+        mDatabase.child("data").child(gameCode).removeValue();
+    }
+
+    public void updateDatabaseBigBoard(String gameCode, int cellId) {
+        mDatabase.child("data").child(gameCode).push().setValue(cellId);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int detailedCellId = cellId * 100 + i * 10 + j;
+                mDatabase.child("data").child(gameCode).push().setValue(detailedCellId);
+            }
+        }
+    }
 
 
 

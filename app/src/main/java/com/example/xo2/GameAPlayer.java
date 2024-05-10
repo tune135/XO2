@@ -36,6 +36,9 @@ public class GameAPlayer extends AppCompatActivity {
     Intent intent;
     CountDownTimer countDownTimer;
     boolean timerRunning = false;
+
+    private FirebaseHandler firebaseHandler;
+    private String gameCode;
     
 
 
@@ -44,6 +47,9 @@ public class GameAPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_aplayer);
+
+        firebaseHandler = new FirebaseHandler(this);
+        gameCode = Constants.code;
 
         turnView = findViewById(R.id.turn2);
         // Initialize the GameBoard
@@ -69,8 +75,7 @@ public class GameAPlayer extends AppCompatActivity {
             }
         }
 
-        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).addChildEventListener(new ChildEventListener() {
-
+        ChildEventListener gameEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
                 Object data = snapshot.getValue();
@@ -85,33 +90,28 @@ public class GameAPlayer extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-                // Your code for handling child changed event
+                // Handle changes
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                // Your code for handling child removed event
+                // Handle removal
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-                // Your code for handling child moved event
+                // Handle moves
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Your code for handling database error
+                // Handle cancellation
             }
-        });
 
+        };
 
-        // Generate a random player number (1 or -1) and initialize the turnView
-        Random random = new Random();
-        int randomValue = random.nextInt(2);
-        int playerNumber = (randomValue == 0) ? -1 : 1;
-
+        firebaseHandler.addGameEventListener(gameCode, gameEventListener);
         turnView.setText("Player X's turn");
-
         ApplyTimer();
     }
 
@@ -195,25 +195,24 @@ public class GameAPlayer extends AppCompatActivity {
         }
     }
 
+
+    protected void onDestroy() {
+        super.onDestroy();
+        firebaseHandler.removeGameEventListener(gameCode);
+    }
+
     public void updateDatabase(int cellId) {
-        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId);
+        firebaseHandler.pushGameMove(gameCode, cellId);
     }
 
-    public void updateDatabaseBigBoard(int cellId){
-        FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId);
-
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).push().setValue(cellId * 100 + i * 10 + j);
-            }
-        }
-    }
-
-
-    void removeCode() {
+    public void removeCode() {
         if (Constants.isCodeMaker) {
-            FirebaseDatabase.getInstance().getReference().child("codes").child(Constants.keyValue).removeValue();
+            firebaseHandler.clearGameData(gameCode);
         }
+    }
+
+    public void updateDatabaseBigBoard(int cellId) {
+        firebaseHandler.updateDatabaseBigBoard(gameCode, cellId);
     }
 
 
