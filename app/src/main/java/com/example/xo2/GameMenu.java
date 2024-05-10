@@ -73,7 +73,7 @@ public class GameMenu extends AppCompatActivity {
             return true;
         } else if (id == R.id.Difficulty) {
             if(aClass == GameABot20.class){
-                aClass = GameAPlayer.class;
+                aClass = OnlineCode.class;
                 bStartGame.setText("Start The Game Against Another Player");
                 whatGame.setText("when clicking on the button the game against the another player will start");
             } else if (aClass == GameAPlayer.class) {
