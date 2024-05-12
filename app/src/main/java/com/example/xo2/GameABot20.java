@@ -327,7 +327,7 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-
+    //method to reset the buttons when a small board was captured
     public void ResetAllButtonsForOneSBoard(int sBoard) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

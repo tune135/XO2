@@ -76,7 +76,7 @@ public class GameMenu extends AppCompatActivity {
                 aClass = OnlineCode.class;
                 bStartGame.setText("Start The Game Against Another Player");
                 whatGame.setText("when clicking on the button the game against the another player will start");
-            } else if (aClass == GameAPlayer.class) {
+            } else if (aClass == OnlineCode.class) {
                 aClass = GameABot20.class;
                 bStartGame.setText("Start The Game Against A Bot");
                 whatGame.setText("when clicking on the button the game against the Bot will start");

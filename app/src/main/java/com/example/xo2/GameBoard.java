@@ -1,29 +1,31 @@
 package com.example.xo2;
 
 public class GameBoard {
-    private String turn; //מי משחק
-    private int[][] bigBoard; //מערך דו ממדי של הלוח הגדול
-    private int[][][][] smallBoard; //מערך דו ממדי של מערכים דו ממדיים של הלוחות הקטנים
+    private String turn; // Who's turn it is to play
+    private int[][] bigBoard; // Two-dimensional array of the big board
+    private int[][][][] smallBoard; // Two-dimensional array of two-dimensional arrays for the small boards
 
+    //Constructor for the GameBoard class initializes the game with player X starting and sets all board positions to zero.
     public GameBoard(){
-        this.turn = "X"; //X מתחיל את המשחק
-        this.bigBoard = new int[3][3]; //3*3 גודל של לוח רגיל
+        this.turn = "X"; // X starts the game
+        this.bigBoard = new int[3][3]; // Standard 3x3 board size
         for(int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
-                this.bigBoard[i][j] = 0; //הכנסת 0 לאיפוס
+                this.bigBoard[i][j] = 0; // Setting all values to 0 to reset
             }
         }
-        this.smallBoard = new int[3][3][3][3]; //גודל 3*3 בשביל 9 הלוחות
+        this.smallBoard = new int[3][3][3][3]; // Size 3x3 for the 9 small boards
         for(int a = 0; a < 3; a++){
             for (int b = 0; b < 3; b++){
                 for(int i = 0; i < 3; i++){
                     for (int j = 0; j < 3; j++){
-                        this.smallBoard[a][b][i][j] = 0; //הכנסת מערך 3*3 עם ערכים של 0 לאיפוס
+                        this.smallBoard[a][b][i][j] = 0; // Inserting a 3x3 array with 0 values to reset
                     }
                 }
             }
         }
     }
+
 
     public String getTurn() {
         return turn;
@@ -136,7 +138,7 @@ public class GameBoard {
 
 
     public Boolean WinCheck(int[][] board, int player){
-        // בדיקת שורות וטורים
+        // Checking rows and columns
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
                 return true; // שורה
@@ -146,7 +148,7 @@ public class GameBoard {
             }
         }
 
-        // בדיקת אלכסונים
+        // Checking diagonals
         if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
             return true; // אלכסון שמאל למעלה עד ימין למטה
         }
@@ -156,6 +158,8 @@ public class GameBoard {
 
         return false; // No win
     }
+
+    //check the big board for a possible draw
     public boolean BigBoardDrawCheck(int[][] board){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -167,6 +171,7 @@ public class GameBoard {
         return true; // All cells are filled, it's a draw
     }
 
+    //Check if there is still a playable cell
     public boolean NoMorePlayOptionsDrawCheck(int[][][][] smallBoard){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
