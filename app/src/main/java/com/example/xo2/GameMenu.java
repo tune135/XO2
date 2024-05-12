@@ -19,12 +19,27 @@ import com.example.xo2.R;
 
 public class GameMenu extends AppCompatActivity {
 
+    // Context of the current state of the application or an object within it
     Context context;
-    Button bTimeNow, bStartGame;
+
+    // Button to display current time or a similar quick action
+    Button bTimeNow;
+
+    // Button to initiate the start of the game
+    Button bStartGame;
+
+    // Handler for managing Firebase operations related to the game
     FirebaseHandler firebaseHandler;
+
+    // Intent for managing transitions between activities
     Intent intent;
+
+    // Class variable to hold the reference to an activity class, used with intents to start new activities
     Class aClass;
+
+    // TextView that displays information about the game type or rules
     TextView whatGame;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +53,7 @@ public class GameMenu extends AppCompatActivity {
 
 
         // Automatically set the daily notification for 4 PM
-        setDailyNotification();
+        setDailyNotification(16, 0, 0);
 
 //        bTimeNow = findViewById(R.id.bTimeNow);
 //        bTimeNow.setOnClickListener(new View.OnClickListener() { //button for testing the notification
@@ -48,7 +63,7 @@ public class GameMenu extends AppCompatActivity {
 //            }
 //        });
 
-
+        //on click button bStartGame to start the chosen game
         bStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,14 +106,14 @@ public class GameMenu extends AppCompatActivity {
     }
 
 
-
-    private void setDailyNotification() {
+    // sets the daily notification for given time
+    private void setDailyNotification(int hour, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
 
         // If it's already past 4 PM today, set it for the next day
         if (Calendar.getInstance().after(calendar)) {
@@ -115,6 +130,7 @@ public class GameMenu extends AppCompatActivity {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, afterIntent);
     }
 
+    //triggers a notification now
     private void triggerNotificationNow() {
         Intent now = new Intent(context, NotificationService.class);
         PendingIntent nowIntent = null;

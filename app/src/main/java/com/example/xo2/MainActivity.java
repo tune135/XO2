@@ -23,20 +23,39 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
 
+    // TextView for displaying the Wi-Fi connection status
     TextView tvWifiStatus;
+
+    // Intent for managing transitions and actions between components or activities
     Intent intent;
+
+    // Context of the current state of the application or an object within it
     Context context;
+
+    // Reference to the current activity to manage UI and lifecycle
     Activity activity;
 
+    // BroadcastReceiver to handle changes in internet connectivity
     InternetConnectionReceiver internetConnectionReceiver;
+
+    // IntentFilter to specify the type of intents a receiver can handle, here for connectivity changes
     IntentFilter intentConnectionFilter;
 
+    // Handler for Firebase operations, managing database interactions
     private FirebaseHandler firebaseHandler;
+
+    // Button typically used for submitting forms or triggering actions
     private Button btn;
+
+    // EditText for user to enter their password
     private EditText password;
+
+    // EditText for user to enter their email
     private EditText email;
 
+    // Constant to listen for changes in network connectivity
     private static final String CONNECTIVITY_ACTION = ConnectivityManager.CONNECTIVITY_ACTION;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initElements();
-
 
         // Initialize UI components
         btn = findViewById(R.id.button);
@@ -91,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    //initialize elements
     private void initElements() {
         activity = MainActivity.this;
         context = MainActivity.this;
@@ -99,17 +118,22 @@ public class MainActivity extends AppCompatActivity {
         intentConnectionFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     }
 
+    // Called when the activity is starting, after creation or after being stopped
     @Override
     protected void onStart() {
-        super.onStart();
+        super.onStart(); // Always call the superclass method first
+        // Registers a BroadcastReceiver to listen for changes in internet connectivity
         registerReceiver(internetConnectionReceiver, intentConnectionFilter);
     }
 
+    // Called when the activity is no longer visible to the user
     @Override
     protected void onStop() {
-        super.onStop();
+        super.onStop(); // Always call the superclass method first
+        // Unregisters the previously registered BroadcastReceiver
         unregisterReceiver(internetConnectionReceiver);
     }
+
 
 
 }

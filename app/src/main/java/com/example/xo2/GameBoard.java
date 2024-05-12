@@ -26,38 +26,23 @@ public class GameBoard {
         }
     }
 
-
+    // gets which player his turn is now
     public String getTurn() {
         return turn;
     }
-    // set and get turn
-    public void setTurn(String turn) {
-        this.turn = turn;
-    }
 
+    // gets the big board
     public int[][] getBigBoard() {
         return bigBoard;
     }
-    // set and get BigBoard
-    public void setBigBoard(int[][] bigBoard) {
-        this.bigBoard = bigBoard;
-    }
 
+    // gets the small board
     public int[][][][] getSmallBoard() {
         return smallBoard;
     }
-    // set and get smallBoard
-    public void setSmallBoard(int[][][][] smallBoard) {
-        this.smallBoard = smallBoard;
-    }
 
-    /**
-     * Manages the gameplay logic for a player's move.
-     *
-     * @param playOnS Coordinates for the small board (e.g., 22 for the center)
-     * @param playOnB Coordinates for the big board (e.g., 11 for the top-left)
-     * @return Result of the move - "X", "O", "Draw", "any", or "-1000"
-     */
+
+    //Manages the gameplay logic for a player's move.
     public String gamePlay(int playOnS, int playOnB) {
         switch (this.turn) {
             case "X": {
@@ -136,24 +121,24 @@ public class GameBoard {
         }
     }
 
-
-    public Boolean WinCheck(int[][] board, int player){
+    //checks for a win in a given board
+    public Boolean WinCheck(int[][] board, int player) {
         // Checking rows and columns
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
-                return true; // שורה
+                return true; // Row
             }
             if (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
-                return true; // טור
+                return true; // Column
             }
         }
 
         // Checking diagonals
         if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
-            return true; // אלכסון שמאל למעלה עד ימין למטה
+            return true; // diagonal from up left to down right
         }
         if (board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-            return true; // אלכסון ימין למעלה עד שמאל למטה
+            return true; // diagonal from up right to down left
         }
 
         return false; // No win

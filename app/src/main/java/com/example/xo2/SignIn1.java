@@ -10,11 +10,21 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignIn1 extends AppCompatActivity {
-    private FirebaseHandler firebaseHandler; // Reference to FirebaseHandler for authentication
-    private Button btn; // Button for sign-in
-    private EditText password; // EditText field for password input
-    private EditText email; // EditText field for email input
+    // Reference to FirebaseHandler for managing Firebase authentication and database operations
+    private FirebaseHandler firebaseHandler;
+
+    // Button for initiating the sign-in process
+    private Button btn;
+
+    // EditText field for user to enter their password
+    private EditText password;
+
+    // EditText field for user to enter their email address
+    private EditText email;
+
+    // Intent for managing transitions between activities or passing data between components
     Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +50,12 @@ public class SignIn1 extends AppCompatActivity {
         });
     }
 
+    // Called when the signup button is clicked, handling the user sign-up process
     public void Signup(View view) {
+        // Create a new Intent to transition from the current Activity to MainActivity
         intent = new Intent(this, MainActivity.class);
+        // Start MainActivity, navigating the user to the main screen after signing up
         startActivity(intent);
     }
+
 }

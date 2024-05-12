@@ -13,9 +13,15 @@ import android.widget.TextView;
 
 public class GameRules extends AppCompatActivity {
 
+    // Button to handle returning to the previous screen or activity
     Button bReturn;
+
+    // Context of the current state of the application or an object within it
     Context context;
+
+    // Intent for managing transitions between activities
     Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,8 @@ public class GameRules extends AppCompatActivity {
 
         context = this;
         bReturn = findViewById(R.id.returnButton);
+
+        //on click bReturn return to the game menu class
         bReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

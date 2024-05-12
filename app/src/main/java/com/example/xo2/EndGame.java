@@ -13,6 +13,7 @@ public class EndGame extends AppCompatActivity {
     // Declare UI components
     private TextView resultTextView;
     private Button playAgainButton;
+    String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class EndGame extends AppCompatActivity {
         playAgainButton = findViewById(R.id.playAgainButton);
 
         // Retrieve the game result passed via intent from the previous activity
-        String result = getIntent().getStringExtra("result");
+        result = getIntent().getStringExtra("result");
         // Display the game result in the TextView
         resultTextView.setText(result);
 

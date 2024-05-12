@@ -52,9 +52,7 @@ public class GameABot20 extends AppCompatActivity {
         setupInitialPlayer();
     }
 
-    /**
-     * Initializes GridLayouts for the big board cells.
-     */
+    //Initializes GridLayouts for the big board cells.
     private void initializeGridLayouts() {
         bigBoardGrids = new GridLayout[3][3];
         for (int i = 0; i < 3; i++) {
@@ -64,9 +62,7 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-    /**
-     * Initializes ImageButtons for each cell within the small boards.
-     */
+    //Initializes ImageButtons for each cell within the small boards.
     private void initializeImageButtons() {
         smallBoardButtons = new ImageButton[3][3][3][3];
         for (int a = 0; a < 3; a++) {
@@ -80,9 +76,7 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-    /**
-     * Determines initial player and initializes bot based on random selection.
-     */
+    //Determines initial player and initializes bot based on random selection.
     private void setupInitialPlayer() {
         Random random = new Random();
         int playerNumber = random.nextInt(2) * 2 - 1; // Randomly assigns 1 or -1
@@ -96,30 +90,23 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-    /**
-     * Finds an ImageButton by its ID constructed from its grid coordinates.
-     */
+    //Finds an ImageButton by its ID constructed from its grid coordinates.
     public View FindViewImageButton(int a, int b, int i, int j) {
         String buttonID = "imageButton" + a + b + i + j;
         int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
         return findViewById(resID);
     }
 
-    /**
-     * Finds a GridLayout by its ID constructed from its coordinates.
-     */
+    //Finds a GridLayout by its ID constructed from its coordinates.
     public View FindViewGrid(int i, int j) {
         String gridID = "grid" + i + j;
         int resID = getResources().getIdentifier(gridID, "id", getPackageName());
         return findViewById(resID);
     }
 
-    // Remaining methods handle gameplay logic such as managing player turns, checking game status,
-    // applying the timer, handling player input, managing the game board UI, and handling bot actions.
 
-    // Example of a method used to check the current play and make decisions:
+    // Check if it's bot's turn and let it play or start the timer for the human player
     public void CheckPlay() {
-        // Check if it's bot's turn and let it play or start the timer for the human player
         if ((Objects.equals(bot.getGb().getTurn(), "X") && bot.getBotNum() == 1) || (Objects.equals(bot.getGb().getTurn(), "O") && bot.getBotNum() == -1)) {
             BotClickButton(bot.playBot(nextTurnPlayNumberSBoard), nextTurnPlayNumberSBoard);
         } else {
@@ -127,7 +114,7 @@ public class GameABot20 extends AppCompatActivity {
         }
     }
 
-    // Example method to apply a countdown timer for the human player's turn:
+    // method to apply a countdown timer for the human player's turn:
     public void ApplyTimer() {
         timerTextView = findViewById(R.id.timerTextView);
         if (timerRunning) {

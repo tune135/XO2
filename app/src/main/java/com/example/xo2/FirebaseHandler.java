@@ -24,10 +24,19 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class FirebaseHandler {
+    // Instance of FirebaseAuth; used for handling user authentication
     private FirebaseAuth auth;
+
+    // Context from which this instance is operating (e.g., an Activity or Application context)
     private Context context;
+
+    // Intent object to carry data or trigger activities or services
     Intent intent;
+
+    // DatabaseReference to interact with Firebase Realtime Database
     private DatabaseReference mDatabase;
+
+    // ChildEventListener to handle real-time changes to data at a specific database reference
     private ChildEventListener gameEventListener;
 
 
@@ -37,6 +46,7 @@ public class FirebaseHandler {
         this.context = context;
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
+    // Constructor to initialize FirebaseHandler with Context
     public FirebaseHandler(Context context) {
         this.auth = FirebaseAuth.getInstance();
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -109,6 +119,7 @@ public class FirebaseHandler {
 
     }
 
+    //Sign out of player
     public void signOut() {
         auth.signOut();
         // Show a short toast message indicating successful sign-out
@@ -119,24 +130,30 @@ public class FirebaseHandler {
         context.startActivity(intent);
     }
 
+
+    //Attaches a ChildEventListener to a specific game in the database.
     public void addGameEventListener(String gameCode, ChildEventListener listener) {
         mDatabase.child("data").child(gameCode).addChildEventListener(listener);
     }
 
+    //Removes the ChildEventListener from a specific game in the database.
     public void removeGameEventListener(String gameCode) {
         if (gameEventListener != null) {
             mDatabase.child("data").child(gameCode).removeEventListener(gameEventListener);
         }
     }
 
+    //Pushes a new move to the game's node in the database.
     public void pushGameMove(String gameCode, Object move) {
         mDatabase.child("data").child(gameCode).push().setValue(move);
     }
 
+    //Clears all data related to a specific game in the database.
     public void clearGameData(String gameCode) {
         mDatabase.child("data").child(gameCode).removeValue();
     }
 
+    //Updates the big board state for a specific game in the database and pushes detailed cell updates.
     public void updateDatabaseBigBoard(String gameCode, int cellId) {
         mDatabase.child("data").child(gameCode).push().setValue(cellId);
         for (int i = 0; i < 3; i++) {
@@ -147,6 +164,23 @@ public class FirebaseHandler {
         }
     }
 
+    // Method to handle the creation or joining of a game code with a ValueEventListener
+    public void createOrJoinCode(String code, boolean isCodeMaker, ValueEventListener listener) {
+        Constants.isCodeMaker = isCodeMaker;
+        mDatabase.child("codes").addValueEventListener(listener);
+    }
+
+    // Method to push a new game code to Firebase and execute a callback on success
+    public void pushCode(String code, Runnable onSuccess) {
+        mDatabase.child("codes").push().setValue(code).addOnSuccessListener(aVoid -> {
+            onSuccess.run();
+        });
+    }
+
+    // Method to remove a ValueEventListener from the database reference
+    public void removeEventListener(ValueEventListener listener) {
+        mDatabase.child("codes").removeEventListener(listener);
+    }
 
 
 }

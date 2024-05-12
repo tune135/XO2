@@ -16,18 +16,26 @@ import android.widget.Toast;
 
 public class InternetConnectionReceiver extends BroadcastReceiver {
 
+    // Manager for handling queries about the state of network connectivity
+    ConnectivityManager connectivityManager;
+
+    // Information about the current network connection
+    NetworkInfo networkInfo;
+
+    // Variable to store network status
+    String status;
+
+
     // Constructor for the BroadcastReceiver
     public InternetConnectionReceiver() {
     }
 
+    //Method to check the wifi status and apply dialog
     @Override
     public void onReceive(Context context, Intent intent) {
         // Get the connectivity manager to check network status
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        // Variable to store network status
-        String status;
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo = connectivityManager.getActiveNetworkInfo();
 
         // Check if there is an active network connection
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -67,6 +75,7 @@ public class InternetConnectionReceiver extends BroadcastReceiver {
 
         // Set up the "OK" button to dismiss the dialog
         Button bOk = dialog.findViewById(R.id.bOk);
+        //on click bOk close dialog
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -22,24 +22,49 @@ import java.util.Random;
 
 public class GameAPlayer extends AppCompatActivity {
 
-
-    // Declare member variables
+    // 2D array representing each small grid within the big boards
     GridLayout[][] bigBoardGrids;
+
+    // 4D array of ImageButtons for each cell in the small boards
     ImageButton[][][][] smallBoardButtons;
+
+    // Object representing the state of the game
     GameBoard board;
+
+    // TextView for displaying whose turn it is
     TextView turnView;
+
+    // TextView for displaying the countdown timer
     TextView timerTextView;
+
+    // The small board a player wants to play on
     int playS;
+
+    // The big board a player wants to play on
     int playB;
+
+    // String indicating who's turn is next
     String nextTurnPlayString;
+
+    // The number of the next turn's small board
     int nextTurnPlayNumberSBoard;
+
+    // Intent to manage transitions between components
     Intent intent;
+
+    // Timer for managing countdown during a game
     CountDownTimer countDownTimer;
+
+    // Flag to check if the timer is running
     boolean timerRunning = false;
 
+    // Handler for Firebase operations
     private FirebaseHandler firebaseHandler;
+
+    // Unique code for the game session
     private String gameCode;
-    
+
+
 
 
     // Override the onCreate method to initialize the activity
@@ -129,8 +154,9 @@ public class GameAPlayer extends AppCompatActivity {
         return findViewById(resID);
     }
 
+    //Method to add the move the first player made on the second player game board
     public void MoveOnline(String data, Boolean move){
-        int cellOnline = 0;
+        int cellOnline;
         if(move) {
             for (int a = 0; a < 3; a++) {
                 for (int b = 0; b < 3; b++) {
@@ -196,34 +222,39 @@ public class GameAPlayer extends AppCompatActivity {
     }
 
 
+    // Clean up and remove event listeners when the activity is destroyed
     protected void onDestroy() {
         super.onDestroy();
-        firebaseHandler.removeGameEventListener(gameCode);
+        firebaseHandler.removeGameEventListener(gameCode); // Removes the game event listener for this game code
     }
 
+    // Updates the database with the move made by the player at the specified cell
     public void updateDatabase(int cellId) {
-        firebaseHandler.pushGameMove(gameCode, cellId);
+        firebaseHandler.pushGameMove(gameCode, cellId); // Pushes the game move to Firebase under the current game code
     }
 
+    // Clears game data from Firebase if the user is the game's code maker
     public void removeCode() {
         if (Constants.isCodeMaker) {
-            firebaseHandler.clearGameData(gameCode);
+            firebaseHandler.clearGameData(gameCode); // Clear game data only if the user created the game code
         }
     }
 
+    // Updates the database specifically for big board moves
     public void updateDatabaseBigBoard(int cellId) {
-        firebaseHandler.updateDatabaseBigBoard(gameCode, cellId);
+        firebaseHandler.updateDatabaseBigBoard(gameCode, cellId); // Update move in the big board on Firebase
     }
 
-
+    // Overrides the onBackPressed method to add custom behavior
     public void onBackPressed() {
         super.onBackPressed();
-        removeCode();
+        removeCode(); // Calls removeCode to clear data if necessary
         if (Constants.isCodeMaker) {
-            FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).removeValue();
+            FirebaseDatabase.getInstance().getReference().child("data").child(Constants.code).removeValue(); // Additional cleanup specific to game creators
         }
-        System.exit(0);
+        System.exit(0); // Exits the app completely after backing out
     }
+
 
     // Method to apply a countdown timer
     public void ApplyTimer() {
@@ -399,6 +430,8 @@ public class GameAPlayer extends AppCompatActivity {
         }
     }
 
+
+    //method to reset the buttons when a small board was captured
     public void ResetAllButtonsForOneSBoard(int sBoard) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
