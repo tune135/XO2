@@ -6,6 +6,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,7 +77,11 @@ public class GameMenu extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.total, menu); // Ensure the menu resource name matches your XML file name
+        if (isWifiConnected()) {
+            getMenuInflater().inflate(R.menu.total, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.no_wifi_menu, menu);
+        }
         return true;
     }
 
@@ -87,14 +93,14 @@ public class GameMenu extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (id == R.id.Difficulty) {
-            if(aClass == GameABot20.class){
+            if (aClass == GameABot20.class) {
                 aClass = OnlineCode.class;
                 bStartGame.setText("Start The Game Against Another Player");
-                whatGame.setText("when clicking on the button the game against the another player will start");
+                whatGame.setText("When clicking on the button the game against another player will start");
             } else if (aClass == OnlineCode.class) {
                 aClass = GameABot20.class;
                 bStartGame.setText("Start The Game Against A Bot");
-                whatGame.setText("when clicking on the button the game against the Bot will start");
+                whatGame.setText("When clicking on the button the game against the Bot will start");
             }
             return true;
         } else if (id == R.id.Exit) {
@@ -102,7 +108,19 @@ public class GameMenu extends AppCompatActivity {
             firebaseHandler.signOut();
             return true;
         }
+        else if (id == R.id.ExitNoWifi) {
+            intent = new Intent(GameMenu.this, MainActivity.class);
+            startActivity(intent); // return to sign up
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Method to check if the device is connected to Wi-Fi
+    public boolean isWifiConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 

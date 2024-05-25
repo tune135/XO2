@@ -33,13 +33,23 @@
         android:layout_marginTop="20dp"/>
 
     <Button
+        android:id="@+id/bOffline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#2196F3"
+        android:text="Play Offline"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/bOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
-        android:background="#2196F3"
-        android:textSize="20sp"
         android:layout_marginTop="30dp"
-        android:textColor="#FFFFFF"/>
+        android:background="#2196F3"
+        android:text="Ok"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
 </LinearLayout>

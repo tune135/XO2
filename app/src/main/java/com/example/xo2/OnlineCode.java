@@ -2,6 +2,8 @@ package com.example.xo2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -158,5 +160,24 @@ public class OnlineCode extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.ExitNoWifi) {
+            intent = new Intent(OnlineCode.this, GameMenu.class);
+            startActivity(intent); // return to sign up
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -43,11 +43,11 @@ public class InternetConnectionReceiver extends BroadcastReceiver {
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 status = "WiFi Network is enabled";
             } else {
-                status = "No WiFi connection";
+                status = "No WiFi connection, play offline or fix it";
             }
         } else {
             // No active network connection
-            status = "WiFi is not activated";
+            status = "WiFi is not activated, play offline or fix it";
         }
 
         // Show a Toast message with the network status
@@ -56,7 +56,7 @@ public class InternetConnectionReceiver extends BroadcastReceiver {
         // Create a dialog to display network status information
         final Dialog dialog;
         // Choose the layout based on the network status
-        if ("No WiFi connection".equals(status) || "WiFi is not activated".equals(status)) {
+        if ("No WiFi connection, play offline or fix it".equals(status) || "WiFi is not activated, play offline or fix it".equals(status)) {
             dialog = new Dialog(context);
             dialog.setContentView(R.layout.activity_alert_dialog);
         } else {
@@ -75,11 +75,26 @@ public class InternetConnectionReceiver extends BroadcastReceiver {
 
         // Set up the "OK" button to dismiss the dialog
         Button bOk = dialog.findViewById(R.id.bOk);
+
+        // Set up the "Play Offline" button to allow the player to play offline
+        Button bOff = dialog.findViewById(R.id.bOffline);
+
         //on click bOk close dialog
         bOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+            }
+        });
+
+        //on click bOff move to the game menu
+        bOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                // Navigate to GameMenu activity
+                Intent intent = new Intent(context, GameMenu.class);
+                context.startActivity(intent);
             }
         });
 

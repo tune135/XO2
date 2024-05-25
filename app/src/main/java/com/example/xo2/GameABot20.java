@@ -1,12 +1,16 @@
 package com.example.xo2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +38,9 @@ public class GameABot20 extends AppCompatActivity {
     Intent intent; // Intent for navigating to different activities
     CountDownTimer countDownTimer; // Timer object for turn timing
     boolean timerRunning = false; // Flag to check if the timer is running
+    Button ret; //Button to return to menu
 
-    /**
-     * Initializes the game UI and components on activity creation.
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class GameABot20 extends AppCompatActivity {
         initializeGridLayouts();
         initializeImageButtons();
 
+        ret = findViewById(R.id.returnTo);
         turnView = findViewById(R.id.turn2);
         setupInitialPlayer();
     }
@@ -205,33 +209,40 @@ public class GameABot20 extends AppCompatActivity {
         // Check the result of the game play and navigate to EndGame activity accordingly
         if (Objects.equals(nextTurnPlayString, "X")) {
             if (bot.getBotNum() == 1) {
-                intent = new Intent(this, EndGame.class);
-                intent.putExtra("result", "You Lost \nNo Worries You Can Play Again");
-                startActivity(intent); // player lose
+                GameEnd("You Lost \nNo Worries You Can Play Again");
             } else {
-                intent = new Intent(this, EndGame.class);
-                intent.putExtra("result", "You won! \nWell Played You Defeated The Bot");
-                startActivity(intent); // player win
+                GameEnd("You won! \nWell Played You Defeated The Bot");
             }
         } else if (Objects.equals(nextTurnPlayString, "O")) {
             if (bot.getBotNum() == 1) {
-                intent = new Intent(this, EndGame.class);
-                intent.putExtra("result", "You won! \nWell Played You Defeated The Bot");
-                startActivity(intent); // player win
+                GameEnd("You won! \nWell Played You Defeated The Bot");
             } else {
-                intent = new Intent(this, EndGame.class);
-                intent.putExtra("result", "You Lost \nNo Worries You Can Play Again");
-                startActivity(intent); // player lose
+                GameEnd("You Lost \nNo Worries You Can Play Again");
             }
         } else if (Objects.equals(nextTurnPlayString, "Draw")) {
-            intent = new Intent(this, EndGame.class);
-            intent.putExtra("result", "The Game Ended As A Draw");
-            startActivity(intent); // Draw
+            GameEnd("The Game Ended As A Draw");
         } else {
             NextTurn();
             CheckPlay();
         }
     }
+
+    //Method for when the game ended
+    public void GameEnd(String result) {
+        turnView.setText(result);
+        turnView.setTextSize(20);
+        stopTimer();
+        ResetButtons();
+        ret.setVisibility(View.VISIBLE); // Make the button visible
+        ret.setEnabled(true); // Make the button clickable
+    }
+
+    //Button to return to the Game Menu
+    public void returnToMenu(View view) {
+        intent = new Intent(GameABot20.this, GameMenu.class);
+        startActivity(intent); // return to menu
+    }
+
 
     // Method to handle the next turn and update clickable buttons
     public void NextTurn() {
@@ -302,15 +313,11 @@ public class GameABot20 extends AppCompatActivity {
             } else {
 
                 Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
-                intent = new Intent(this, EndGame.class);
-                intent.putExtra("result", "You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
-                startActivity(intent); // player win
+                GameEnd("You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
             }
         } else {
             Toast.makeText(GameABot20.this, "Bot Not Working", Toast.LENGTH_SHORT).show();
-            intent = new Intent(this, EndGame.class);
-            intent.putExtra("result", "You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
-            startActivity(intent); // player win
+            GameEnd("You won! \nThere Was A Problem In The Bot And We Will Fix It Soon");
         }
     }
 
@@ -323,4 +330,27 @@ public class GameABot20 extends AppCompatActivity {
             }
         }
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.game_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.Quit) {
+            intent = new Intent(GameABot20.this, GameMenu.class);
+            startActivity(intent); // Quit the game
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }
