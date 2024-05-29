@@ -183,8 +183,6 @@ public class GameAPlayer extends AppCompatActivity {
             }
 
 
-
-
             // Get the result of the game play
             nextTurnPlayString = board.gamePlay(playS, playB);
 
@@ -194,12 +192,10 @@ public class GameAPlayer extends AppCompatActivity {
                     if(board.getBigBoard()[i][j] == 1){
                         ResetAllButtonsForOneSBoard(i * 10 + j);
                         bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_x);
-                        //updateDatabaseBigBoard(i * 10 + j);
                     }
                     else if(board.getBigBoard()[i][j] == -1){
                         ResetAllButtonsForOneSBoard(i * 10 + j);
                         bigBoardGrids[i][j].setBackgroundResource(R.drawable.ic_o);
-                        //updateDatabaseBigBoard(i * 10 + j);
                     }
                 }
             }
@@ -207,12 +203,18 @@ public class GameAPlayer extends AppCompatActivity {
             // Check the result of the game play and navigate to EndGame activity accordingly
             if (Objects.equals(nextTurnPlayString, "X")) {
                 intent = new Intent(this, EndGame.class);
-                startActivity(intent); // player X win
+                intent.putExtra("result", "Well Played \nPlayer X Won The Game");
+                startActivity(intent); // Draw
 
             } else if (Objects.equals(nextTurnPlayString, "O")) {
                 intent = new Intent(this, EndGame.class);
-                startActivity(intent); // player O win
+                intent.putExtra("result", "Well Played \nPlayer X Won The Game");
+                startActivity(intent); // Draw
 
+            } else if (Objects.equals(nextTurnPlayString, "Draw")) {
+                intent = new Intent(this, EndGame.class);
+                intent.putExtra("result", "The Game Ended As A Draw");
+                startActivity(intent); // Draw
             } else {
                 NextTurn();
                 ApplyTimer();
@@ -238,11 +240,6 @@ public class GameAPlayer extends AppCompatActivity {
         if (Constants.isCodeMaker) {
             firebaseHandler.clearGameData(gameCode); // Clear game data only if the user created the game code
         }
-    }
-
-    // Updates the database specifically for big board moves
-    public void updateDatabaseBigBoard(int cellId) {
-        firebaseHandler.updateDatabaseBigBoard(gameCode, cellId); // Update move in the big board on Firebase
     }
 
     // Overrides the onBackPressed method to add custom behavior
